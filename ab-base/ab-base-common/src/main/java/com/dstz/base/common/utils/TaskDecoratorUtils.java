@@ -5,7 +5,6 @@ import org.springframework.core.task.TaskDecorator;
 /**
  * task decorator utils
  *
- * @author wacxhs
  */
 public class TaskDecoratorUtils {
 

@@ -1,11 +1,10 @@
 package com.dstz.base.common.freemark;
 
 /**
- * Freemarker接口。 <br />
+ * Freemarker interface.<br />
  * <p>
- * 实现了该接口的spring bean 将会被注入到Freemarker引擎
+ * Spring beans that implement this interface will be injected into the Freemarker engine
  *
- * @author lightning
  */
 public interface IFreemarkScript {
 

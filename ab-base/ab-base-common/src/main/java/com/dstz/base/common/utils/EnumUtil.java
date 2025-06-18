@@ -18,13 +18,12 @@ import com.fasterxml.jackson.databind.node.JsonNodeFactory;
 import cn.hutool.extra.spring.SpringUtil;
 
 /**
- * 枚举的工具类
+ * Enumerated tool class
  *
- * @author aschs
  */
 public class EnumUtil {
     /**
-     * 防止被实例化
+     * Prevent from being instantiated
      */
     private EnumUtil() {
 
@@ -32,14 +31,14 @@ public class EnumUtil {
 
     /**
      * <pre>
-     * 把一个枚举类转成JSON，主要是为了方便前端直接调用(以下是jsp的用法)
-     * 前端调用例子：
+     * Convert an enumeration class to JSON, mainly to facilitate direct front-end calls (the following is the usage of jsp)
+     * Front-end call example:
      * <%@page import="com.dstz.sys.persistence.enums.FieldControlType"%>
      * <%@page import="com.dstz.base.core.util.EnumUtil"%>
      * <script type="text/javascript">
      * var FieldControlType = <%=EnumUtil.toJSON(FieldControlType.class)%>;
      * </script>
-     * 系统内置的异步获取类：toolsControllerUtil.js
+     * The system's built-in asynchronous acquisition class: toolsControllerUtil.js
      * </pre>
      *
      * @param enumClass
@@ -81,11 +80,11 @@ public class EnumUtil {
 
     /**
      * <pre>
-     * 把一个枚举类的路径转成json数组
-     * 注意！！如果枚举在类中间，那么路径如下：com.dstz.base.db.model.Column$TYPE
+     * Convert an enumeration class path into a json array
+     * NOTE! ! If the enumeration is in the middle of a class, the path is as follows: com.dstz.base.db.model.Column$TYPE
      * </pre>
      *
-     * @param enumClassPath 枚举路径
+     * @param enumClassPath Enumeration path
      * @return
      * @throws Exception
      */
@@ -107,7 +106,7 @@ public class EnumUtil {
 
     /**
      * <pre>
-     * 把一个枚举实例转成JSON，主要是为了方便前端直接调用
+     * Convert an enumeration instance to JSON, mainly to facilitate direct front-end calls.
      * </pre>
      *
      * @param e
@@ -118,14 +117,14 @@ public class EnumUtil {
         Map<String, Object> result = new HashMap<>();
         Field[] fields = e.getClass().getDeclaredFields();
         for (Field field : fields) {
-            // 让私有变量也能被访问到
+            // Make private variables accessible
             field.setAccessible(true);
-            // 过滤掉自身的枚举（我都想不到枚举实例为什么也算是类的字段）和枚举类必有的全部变量的ENUM$VALUES字段
+            // Filter out the enumeration itself (I can't figure out why enumeration instances are also considered class fields) and the ENUM$VALUES field of all the variables that the enumeration class must have
             if ("ENUM$VALUES".equals(field.getName()) || field.getType().equals(e.getClass())) {
                 continue;
             }
             Object obj = field.get(e);
-            if (obj instanceof Enum) {// 如果类型是Enum，那刚好继续解释多一次
+            if (obj instanceof Enum) {// If the type is Enum, then just continue to explain it one more time
                 result.put(field.getName(), toJSON((Enum<?>) field.get(e)));
             } else {
                 result.put(field.getName(), field.get(e));
@@ -136,10 +135,10 @@ public class EnumUtil {
     }
 
     /**
-     * 加载枚举额外数据
+     * Load enumeration extra data
      *
-     * @param clazz    枚举类
-     * @param consumer 处理数据
+     * @param clazz    Enumeration class
+     * @param consumer Processing data
      */
     private static void loadEnumExtraData(Class<?> clazz, Consumer<EnumExtraData> consumer) {
         ApplicationContext applicationContext = SpringUtil.getApplicationContext();

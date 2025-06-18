@@ -8,9 +8,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * 常量的工具类
+ * Tool class for constants
  *
- * @author aschs
  */
 public class ConstantUtil {
     private ConstantUtil() {
@@ -19,29 +18,29 @@ public class ConstantUtil {
 
     /**
      * <pre>
-     * 获取指定类下的某个静态常量
-     * ps:那个key 一定是final static 的才能被获取
+     * Get a static constant under the specified class
+     * ps: That key must be final static to be obtained
      * </pre>
      *
      * @param classPath
      * @param key
-     * @return 返回json:{key:"字段名",value:"字段值",type:"字段的类型"}
+     * @return Return json:{key:"field name",value:"field value",type:"field type"}
      */
     public static JsonNode get(String classPath, String key) {
         JsonNode json = get(classPath).get(key);
         if (json != null) {
             return json;
         }
-        throw new RuntimeException("类中" + classPath + "获取不到常量[" + key + "]");
+        throw new RuntimeException("In the category " + classPath + " unable to obtain constants [" + key + "]");
     }
 
     /**
      * <pre>
-     * 获取指定类下的某个静态常量下所有final static的常量
+     * Get all final static constants under a static constant in a specified class
      * </pre>
      *
      * @param classPath
-     * @return 返回map:{key:{key:"字段名",value:"字段值",type:"字段的类型"},key1:{key:"字段名1",value:"字段值1",type:"字段的类型1"}}
+     * @return Return map:{key:{key:"field name",value:"field value",type:"field type"},key1:{key:"field name 1",value:"field value 1",type:"field type 1"}}
      */
     public static Map<String, JsonNode> get(String classPath) {
         try {

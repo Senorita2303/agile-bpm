@@ -1,9 +1,8 @@
 package com.dstz.base.common.utils;
 
 /**
- * 类型转换，常用于消除列表字典转换警告
+ * Type conversion, often used to eliminate list dictionary conversion warnings
  *
- * @author wacxhs
  */
 public class CastUtils {
 

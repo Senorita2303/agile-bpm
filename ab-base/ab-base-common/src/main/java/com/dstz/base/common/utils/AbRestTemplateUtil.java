@@ -17,29 +17,28 @@ import java.util.Objects;
 /**
  * http client
  *
- * @author wacxhs
  */
 public class AbRestTemplateUtil {
 
 	/**
-	 * 微服务服务间调用协议
+	 * Microservice service calling protocol
 	 */
 	public static final String LB_PROTOCOL = "lb://";
 
 	/**
-	 * HTTP服务调用协议
+	 * HTTP service call protocol
 	 */
 	public static final String HTTP_PROTOCOL = "http://";
 	
 	private static final class RestTemplateBeanHolder {
 
 		/**
-		 * 普通rest template
+		 * Ordinary rest template
 		 */
 		static final RestTemplate REST_TEMPLATE;
 
 		/**
-		 * 微服务
+		 * Microservices
 		 */
 		static final RestTemplate SERVICE_REST_TEMPLATE;
 
@@ -81,9 +80,9 @@ public class AbRestTemplateUtil {
 	}
 
 	/**
-	 * 获取rest template
+	 * Get rest template
 	 *
-	 * @param isService 是否微服务
+	 * @param isService Is it microservices?
 	 * @return rest template
 	 */
 	public static RestTemplate getRestTemplate(boolean isService) {
@@ -93,9 +92,9 @@ public class AbRestTemplateUtil {
 	}
 
 	/**
-	 * 根据地址获取RestTemplate
+	 * Get RestTemplate based on the address
 	 *
-	 * @param url 调用地址
+	 * @param url Call address
 	 * @return rest template
 	 */
 	public static RestTemplate getRestTemplate(String url) {
@@ -103,10 +102,10 @@ public class AbRestTemplateUtil {
 	}
 
 	/**
-	 * 根据URL识别出真实调用地址
+	 * Identify the real call address based on the URL
 	 *
-	 * @param url 原地址
-	 * @return 真实调用地址
+	 * @param url Original address
+	 * @return Real call address
 	 */
 	public static String tellUrl(String url) {
 		if (StrUtil.startWith(url, LB_PROTOCOL)) {

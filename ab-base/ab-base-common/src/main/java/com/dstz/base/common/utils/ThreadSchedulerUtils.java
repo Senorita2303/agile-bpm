@@ -6,9 +6,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
 
 /**
- * 线程调度器工具类
+ * Thread scheduler tool class
  *
- * @author wacxhs
  */
 public class ThreadSchedulerUtils {
 
@@ -17,9 +16,9 @@ public class ThreadSchedulerUtils {
 	}
 
 	/**
-	 * 获取调度执行器
+	 * Get the scheduler executor
 	 *
-	 * @return 调度执行器
+	 * @return Scheduling executor
 	 */
 	public static ScheduledExecutorService getScheduledExecutorService() {
 		return Singleton.scheduledThreadPoolExecutor;

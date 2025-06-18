@@ -6,7 +6,6 @@ import java.util.Set;
 /**
  * Role resource allocation
  * 
- * @author wacxhs
  */
 public class GrantRoleResourceDTO {
 
@@ -15,13 +14,13 @@ public class GrantRoleResourceDTO {
 	 */
 	@NotEmpty(message = "Role ID cannot be empty")
 	private String roleId;
-	
+
 	/**
 	 * App ID
 	 */
 	@NotEmpty(message = "Application ID cannot be empty")
 	private String appId;
-	
+
 	/**
 	 * Resource ID
 	 */
@@ -66,11 +65,7 @@ public class GrantRoleResourceDTO {
 
 	@Override
 	public String toString() {
-		return "GrantRoleResourceDTO{" +
-				"roleId='" + roleId + '\'' +
-				", appId='" + appId + '\'' +
-				", resIds=" + resIds +
-				", halfResIds=" + halfResIds +
-				'}';
+		return "GrantRoleResourceDTO{" + "roleId='" + roleId + '\'' + ", appId='" + appId + '\'' + ", resIds=" + resIds
+				+ ", halfResIds=" + halfResIds + '}';
 	}
 }

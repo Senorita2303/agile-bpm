@@ -8,9 +8,8 @@ import java.util.Collections;
 import java.util.Map;
 
 /**
- * 审计日志变量工具
+ * Audit log variable tool
  *
- * @author wacxhs
  */
 public class AuditLogVariableUtil {
 
@@ -19,7 +18,7 @@ public class AuditLogVariableUtil {
 		if (request == null) {
 			return null;
 		}
-		// 从线程中获取
+		// Get from thread
 		AbRequestLog abRequestLog = (AbRequestLog) request.getAttribute(AbRequestLog.class.getName());
 		if (abRequestLog == null) {
 			return null;
@@ -32,10 +31,10 @@ public class AuditLogVariableUtil {
 	}
 
 	/**
-	 * 从请求日志中获取到变量Map
+	 * Get the variable map from the request log
 	 *
-	 * @param abRequestLog 请求日志
-	 * @return 变量Map
+	 * @param abRequestLog Request log
+	 * @return Variable Map
 	 */
 	public static Map<String, Object> getVariableMap(AbRequestLog abRequestLog) {
 		if (abRequestLog == null) {
@@ -49,10 +48,10 @@ public class AuditLogVariableUtil {
 	}
 
 	/**
-	 * 设置变量
+	 * Set variables
 	 *
-	 * @param name  变量名
-	 * @param value 变量值
+	 * @param name  Variable name
+	 * @param value Variable value
 	 */
 	public static void setVariable(String name, Object value) {
 		Map<String, Object> variableMap = getVariableMap(AbRequestUtils.getHttpServletRequest());

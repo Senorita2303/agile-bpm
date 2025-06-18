@@ -10,59 +10,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.io.Serializable;
 
 /**
- * 做消息类型的公共逻辑 ：如日志等
+ * Do the common logic of message types: such as logs, etc
  *
  * @param <T>
- * @author lightning
  */
 public abstract class AbsNotifyMessageHandler<T extends Serializable> implements JmsHandler<T> {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger(AbsNotifyMessageHandler.class);
-    
-    public static final String PARAM_USERNAME = "$userName";
+	protected static final Logger LOGGER = LoggerFactory.getLogger(AbsNotifyMessageHandler.class);
 
-    public static final String PC_URL_CHART = "{ctx}";
+	public static final String PARAM_USERNAME = "$userName";
 
-    @Autowired
-    public IdentityConvert identityConvert;
+	public static final String PC_URL_CHART = "{ctx}";
 
-    /**
-     * 消息类型名
-     *
-     * @return
-     */
-    public abstract String getTitle();
+	@Autowired
+	public IdentityConvert identityConvert;
 
-    /**
-     * 是否默认选中
-     *
-     * @return
-     */
-    public boolean getIsDefault() {
-        return false;
-    }
+	/**
+	 * Message type name
+	 *
+	 * @return
+	 */
+	public abstract String getTitle();
 
-    /**
-     * 是否支持 HTML 内容
-     *
-     * @return
-     */
-    public boolean getSupportHtml() {
-        return true;
-    }
+	/**
+	 * Is it selected by default?
+	 *
+	 * @return
+	 */
+	public boolean getIsDefault() {
+		return false;
+	}
 
+	/**
+	 * Whether to support HTML content
+	 *
+	 * @return
+	 */
+	public boolean getSupportHtml() {
+		return true;
+	}
 
-    @Override
-    public boolean handlerMessage(JmsDTO<T> message) {
-        return sendMessage(message.getData());
-    }
+	@Override
+	public boolean handlerMessage(JmsDTO<T> message) {
+		return sendMessage(message.getData());
+	}
 
-    /**
-     * 发送消息处理器具体实现 不同消息的发送
-     *
-     * @param data
-     * @return
-     */
-    public abstract boolean sendMessage(T data);
+	/**
+	 * 发送消息处理器具体实现 不同消息的发送
+	 *
+	 * @param data
+	 * @return
+	 */
+	public abstract boolean sendMessage(T data);
 
 }

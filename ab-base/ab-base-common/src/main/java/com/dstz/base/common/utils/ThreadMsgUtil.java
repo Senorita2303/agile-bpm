@@ -6,9 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 消息Util工具类,在线程变量中添加消息,消息使用list存放。
+ * Message Util tool class, add messages to thread variables, and use list to store messages.
  * 
- * @author aschs
  */
 public class ThreadMsgUtil {
 	private static ThreadLocal<List<String>> localMsg = new ThreadLocal<>();
@@ -18,7 +17,7 @@ public class ThreadMsgUtil {
 	}
 	
 	/**
-	 * 添加消息。
+	 * Add a message.
 	 *
 	 * @param msg
 	 */
@@ -32,7 +31,7 @@ public class ThreadMsgUtil {
 	}
 
 	/**
-	 * 获取消息数据，并直接清除消息中的数据。
+	 * Get the message data and clear the data in the message directly.
 	 *
 	 * @return
 	 */
@@ -41,7 +40,7 @@ public class ThreadMsgUtil {
 	}
 
 	/**
-	 * 获取消息数据。
+	 * Get message data.
 	 *
 	 * @param clean
 	 * @return
@@ -55,7 +54,7 @@ public class ThreadMsgUtil {
 	}
 
 	/**
-	 * 返回流程消息。
+	 * Returns the process message.
 	 *
 	 * @return
 	 */
@@ -64,7 +63,7 @@ public class ThreadMsgUtil {
 	}
 
 	/**
-	 * 获取消息。
+	 * Get the message.
 	 *
 	 * @param clean
 	 * @return
@@ -86,7 +85,7 @@ public class ThreadMsgUtil {
 	}
 
 	/**
-	 * 清除消息。
+	 * Clear message.
 	 */
 	public static void clean() {
 		localMsg.remove();

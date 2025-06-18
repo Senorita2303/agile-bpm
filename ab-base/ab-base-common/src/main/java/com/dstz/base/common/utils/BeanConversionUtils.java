@@ -10,18 +10,15 @@ import java.util.Map;
 import java.util.Objects;
 
 /**
- * bean 转换工具类
+ * bean conversion tool class
  *
- * @author jeff
- * @since 2022-01-24
  */
 public class BeanConversionUtils {
 
     /**
-     * @描述 list数据转Tree，大多使用在前台json中。
-     * @说明 实现接口 Tree即可
-     * @扩展 可通过反射获取id, pid，目前只提供Tree接口排序的实现
-     * @author jeff
+     * @Description list data converted to Tree, mostly used in front-end json
+     * @Description Just implement the interface Tree
+     * @Extension You can obtain id and pid through reflection. Currently, only the implementation of Tree interface sorting is provided
      */
     @SuppressWarnings({ "rawtypes", "unchecked" })
     public static <T extends Tree> List<T> listToTree(List<T> list) {

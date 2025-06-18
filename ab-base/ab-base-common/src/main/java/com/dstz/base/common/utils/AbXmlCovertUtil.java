@@ -14,21 +14,19 @@ import java.io.StringReader;
 import java.io.StringWriter;
 
 /**
- * @author jinxia.hou
  * @Name AbXmlCovertUtil
- * @description: xml pojo转换工具类
- * @date 2022/8/1516:33
+ * @description: xml pojo conversion tool class
  */
 public class AbXmlCovertUtil {
     /**
-     * XML转换为POJO类型
+     * XML to POJO type
      */
     public static <T> T covert2Object(String xml, Class<?>... classes) throws JAXBException, SAXException {
         JAXBContext jAXBContext = JAXBContext.newInstance(classes);
 
-        // 创建XMLReader并禁用外部实体
+        // Create an XMLReader and disable external entities
         XMLReader xmlReader = XMLReaderFactory.createXMLReader();
-        // 返回空字符串阻止实体解析
+        // Return an empty string to prevent entity resolution
         xmlReader.setEntityResolver((publicId, systemId) -> new InputSource(new StringReader("")));
 
         SAXSource saxSource = new SAXSource(xmlReader, new InputSource(new StringReader(xml)));
@@ -38,7 +36,7 @@ public class AbXmlCovertUtil {
     }
 
     /**
-     * POJO类型转换为XML
+     * POJO type conversion to XML
      */
     public static String covert2Xml(Object serObj) throws JAXBException  {
         JAXBContext jc = JAXBContext.newInstance(serObj.getClass());

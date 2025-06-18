@@ -16,9 +16,8 @@ import java.util.Optional;
 import java.util.Set;
 
 /**
- * 用户上下文工具类
+ * User context tool class
  *
- * @author wacxhs
  */
 public class UserContextUtils {
 
@@ -29,26 +28,26 @@ public class UserContextUtils {
     }
 
     /**
-     * 获取用户上下文
+     * Get user context
      *
-     * @return 用户上下文
+     * @return User context
      */
     public static UserContext getUserContext() {
         return USER_CONTEXT_SUPPLER.obtain();
     }
 
     /**
-     * 获取用户,请判空
+     * Get user, please judge as empty
      *
-     * @return 用户
+     * @return User
      */
     public static Optional<IUser> getUser() {
         return ObjectUtil.defaultIfNull(getUserContext().getUser(), Optional.empty());
     }
     
     /**
-     * 强依赖当前用户的接口场景<br/>
-     * 如果你的方法有可能出现在没登录用户场景的，勿用
+     * Interface scenarios that strongly depend on the current user<br/>
+     * If your method may appear in the scenario of non-logged-in users, do not use it
      * @return
      */
     public static IUser getValidUser() {
@@ -56,45 +55,45 @@ public class UserContextUtils {
     }
 
     /**
-     * 获取用户ID
+     * Get User ID
      *
-     * @return 用户ID
+     * @return User ID
      */
     public static String getUserId() {
         return getUser().map(IUser::getUserId).orElse(null);
     }
 
     /**
-     * 获取用户姓名
+     * Get user name
      *
-     * @return 获取用户姓名
+     * @return Get user name
      */
     public static String getUserName() {
         return getUser().map(IUser::getFullName).orElse(null);
     }
 
     /**
-     * 获取用户账户
+     * Get user account
      *
-     * @return 用户账户
+     * @return User account
      */
     public static String getAccount(){
         return getUser().map(IUser::getUsername).orElse(null);
     }
 
     /**
-     * 获取组织
+     * Get organization
      *
-     * @return 组织
+     * @return Organization
      */
     public static Optional<IGroup> getGroup() {
         return ObjectUtil.defaultIfNull(getUserContext().getOrg(), Optional.empty());
     }
 
     /**
-     * 获取当前组织ID
+     * Get the current organization ID
      *
-     * @return 组织ID
+     * @return Organization ID
      */
     public static String getGroupId() {
         return getUserContext().getOrg().map(IGroup::getGroupId).orElse(null);
@@ -102,16 +101,16 @@ public class UserContextUtils {
 
 
     /**
-     * 是否超级管理员
+     * Is it a super administrator?
      *
-     * @return 是否超级管理员
+     * @return Is it a super administrator?
      */
     public static boolean isSuperAdmin() {
         return getUserContext().isSuperAdmin();
     }
 
     /**
-     * 清除当前执行人。
+     * Clear the current executor.
      * void
      */
     public static void clear() {
@@ -128,15 +127,15 @@ public class UserContextUtils {
 	}
 
     /**
-     * 通过用户账号设置当前用户
-     * @param account 用户账号
+     * Set the current user through the user account
+     * @param account User account
      */
 	public static void setUserByAccount(String account){
-	    Assert.notEmpty(account,()->new BusinessMessage(GlobalApiCodes.PARAMETER_INVALID.formatDefaultMessage("用户账号不能为空")));
+	    Assert.notEmpty(account,()->new BusinessMessage(GlobalApiCodes.PARAMETER_INVALID.formatDefaultMessage("User account cannot be empty")));
 
         final UserApi userApi = SpringUtil.getBean(UserApi.class);
         IUser user = userApi.getByUsername(account);
-        Assert.notNull(user,()->new BusinessException(GlobalApiCodes.DATA_NOT_FOUND.formatDefaultMessage(String.format("用户账号【%s】",account))));
+        Assert.notNull(user,()->new BusinessException(GlobalApiCodes.DATA_NOT_FOUND.formatDefaultMessage(String.format("User account 【%s】",account))));
 
         UserContext userContext = getUserContext();
         userContext.clear();

@@ -4,17 +4,15 @@ import com.dstz.component.msg.api.vo.MessageTemplateVO;
 
 /**
  * <p>
- * 消息模板api
+ * Message template api
  * </p>
  *
- * @author lightning
- * @since 2022-11-18
  */
 public interface MessageTemplateApi {
 
 
     /**
-     * 根据code查询模板信息
+     * Query template information based on code
      *
      * @param code
      * @return

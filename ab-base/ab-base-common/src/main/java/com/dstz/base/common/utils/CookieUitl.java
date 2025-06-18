@@ -9,18 +9,17 @@ import javax.servlet.http.HttpServletResponse;
 
 
 /**
- * cookie操作类
+ * Cookie operation class
  *
- * @author jeff
  */
 public class CookieUitl {
-    // 自动过期
+    // Automatic expiration
     public static final int cookie_auto_expire = -1;
-    // 不过期
+    // Not expired
     public static final int cookie_no_expire = 60 * 60 * 24 * 365;
 
     /**
-     * 添加cookie，cookie的生命周期为关闭浏览器即消失
+     * Add a cookie. The life cycle of the cookie is to disappear when the browser is closed
      *
      * @param name
      * @param value
@@ -54,7 +53,7 @@ public class CookieUitl {
 
 
     /**
-     * 删除cookie
+     * Delete cookies
      *
      * @param name
      * @param response

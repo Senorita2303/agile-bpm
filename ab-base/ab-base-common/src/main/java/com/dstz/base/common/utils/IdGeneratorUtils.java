@@ -4,9 +4,8 @@ import cn.hutool.extra.spring.SpringUtil;
 import com.dstz.base.common.idgen.IdGenerator;
 
 /**
- * ID生成器工具类
+ * ID generator tool class
  *
- * @author wacxhs
  */
 public class IdGeneratorUtils {
 
@@ -18,9 +17,9 @@ public class IdGeneratorUtils {
 
 
     /**
-     * 唯一ID
+     * Unique ID
      *
-     * @return 唯一ID
+     * @return Unique ID
      */
     public static String nextId() {
         if (idGenerator == null) {

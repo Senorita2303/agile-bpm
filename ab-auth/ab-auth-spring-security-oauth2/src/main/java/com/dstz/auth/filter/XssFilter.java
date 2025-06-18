@@ -23,61 +23,61 @@ import java.util.regex.Pattern;
  *  You can configure certain URLs that do not need to be checked.
  * </pre>
  *
- * @author lightning
  */
 public class XssFilter extends IngoreChecker implements Filter {
 
-    private Pattern regex = Pattern.compile("<(\\S*?)[^>]*>.*?</\\1>|<[^>]+>", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.DOTALL | Pattern.MULTILINE);
+	private Pattern regex = Pattern.compile("<(\\S*?)[^>]*>.*?</\\1>|<[^>]+>",
+			Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE | Pattern.DOTALL | Pattern.MULTILINE);
 
-    @Override
-    public void destroy() {
-    }
+	@Override
+	public void destroy() {
+	}
 
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-            throws IOException, ServletException {
-        HttpServletRequest req = (HttpServletRequest) request;
-        // Whether the page is ignored.
-        boolean isIngoreUrl = isIngores(req);
-        if (isIngoreUrl) {
-            chain.doFilter(request, response);
-        } else {
-            // Check for XSS attacks.
-            boolean hasXss = checkXss(req);
-            if (hasXss) {
-                response.getWriter().print(JsonUtils.toJSONString(ApiResponse.fail(GlobalApiCodes.PARAMETER_INVALID.getCode(),"检测到提交内容含HTML代码，被拦截！")));
-            } else {
-                chain.doFilter(request, response);
-            }
-        }
-    }
+	@Override
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+		HttpServletRequest req = (HttpServletRequest) request;
+		// Whether the page is ignored.
+		boolean isIngoreUrl = isIngores(req);
+		if (isIngoreUrl) {
+			chain.doFilter(request, response);
+		} else {
+			// Check for XSS attacks.
+			boolean hasXss = checkXss(req);
+			if (hasXss) {
+				response.getWriter().print(JsonUtils.toJSONString(
+						ApiResponse.fail(GlobalApiCodes.PARAMETER_INVALID.getCode(), "检测到提交内容含HTML代码，被拦截！")));
+			} else {
+				chain.doFilter(request, response);
+			}
+		}
+	}
 
+	@Override
+	public void init(FilterConfig config) {
+	}
 
-    @Override
-    public void init(FilterConfig config) {
-    }
+	/**
+	 * Determine whether the input has XSS injection issues.
+	 *
+	 * @param request
+	 * @return
+	 */
+	private boolean checkXss(HttpServletRequest request) {
+		Enumeration<?> params = request.getParameterNames();
+		while (params.hasMoreElements()) {
+			String key = params.nextElement().toString();
+			String[] vals = request.getParameterValues(key);
+			String val = StrUtil.join("", vals);
+			if (StrUtil.isEmpty(val))
+				continue;
 
-    /**
-     * 判断输入是否有XSS注入问题。
-     *
-     * @param request
-     * @return
-     */
-    private boolean checkXss(HttpServletRequest request) {
-        Enumeration<?> params = request.getParameterNames();
-        while (params.hasMoreElements()) {
-            String key = params.nextElement().toString();
-            String[] vals = request.getParameterValues(key);
-            String val = StrUtil.join("", vals);
-            if (StrUtil.isEmpty(val)) continue;
-
-            Matcher regexMatcher = regex.matcher(val);
-            if (regexMatcher.find()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
+			Matcher regexMatcher = regex.matcher(val);
+			if (regexMatcher.find()) {
+				return true;
+			}
+		}
+		return false;
+	}
 
 }

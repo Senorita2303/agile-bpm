@@ -15,10 +15,8 @@ import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * bean 拷贝
+ * bean copy
  *
- * @author jeff
- * @since 2022-01-24
  */
 public class BeanCopierUtils {
 
@@ -29,10 +27,10 @@ public class BeanCopierUtils {
     }
 
     /**
-     * 属性拷贝
+     * Attribute copy
      *
-     * @param source 源对象
-     * @param target 目标对象
+     * @param source Source object
+     * @param target Target object
      */
     public static <T> T copyProperties(Object source, T target) {
         if (source != null && target != null) {
@@ -42,11 +40,11 @@ public class BeanCopierUtils {
     }
 
     /**
-     * 将一个类转换成另外一个类，可用于copy复制对象场景
+     * Convert a class into another class, which can be used to copy object scenes
      *
-     * @param source 源对象
-     * @param clazz  目标类
-     * @return 目标对象
+     * @param source Source object
+     * @param clazz  Target class
+     * @return Target object
      */
     public static <T> T transformBean(Object source, Class<T> clazz) {
         if (source == null) {
@@ -58,12 +56,12 @@ public class BeanCopierUtils {
     }
 
     /**
-     * 将列表转换为另一个类对象实例列表。
+     * Convert a list to a list of instances of another class object.
      *
-     * @param sourceList  源数据列表
-     * @param targetClass 目标类
+     * @param sourceList  Source data list
+     * @param targetClass Target class
      * @param <T>         T
-     * @return 目标对象列表
+     * @return Target object list
      */
     public static <T> List<T> transformList(Collection<?> sourceList, Class<T> targetClass) {
         if (CollUtil.isEmpty(sourceList)) {
@@ -80,11 +78,11 @@ public class BeanCopierUtils {
     }
 
 	/**
-	 * 将bean转换为Map
+	 * Convert beans to Map
 	 *
 	 * @param bean     bean
-	 * @param editable 限制的类或接口，必须为目标对象的实现接口或父类，用于限制拷贝的属性，例如一个类我只想复制其父类的一些属性，就可以将editable设置为父
-	 * @return map存放的键值数据
+	 * @param editable The restricted class or interface must be the target object's implementation interface or parent class, which is used to restrict the properties of the copy. For example, if I only want to copy some properties of a class from its parent class, I can set editable to parent.
+	 * @return Map stores key-value data
 	 */
 	public static Map<String, Object> transformMap(Object bean, Class<?> editable) {
 		PropertyDescriptor[] propertyDescriptors;
@@ -113,12 +111,12 @@ public class BeanCopierUtils {
     }
 
     /**
-     * 重写BeanCopier，兼容高版本JDK
+     * Rewrite BeanCopier to be compatible with higher JDK versions
      * <p>
-     * 重写原因：<br>
-     * 1. JDK 16版本新加了ClassLoader保护，不在允许通过反射调用。<br/>
-     * 2. 设置生成名称与BeanCopier在同一包名下 <br/>
-     * <b>JEP规范：https://openjdk.java.net/jeps/396</</b>
+     * Reason for rewriting:<br>
+     * 1. JDK 16 adds ClassLoader protection, and reflection calls are no longer allowed.<br/>
+     * 2. Set the generated name to be in the same package as BeanCopier <br/>
+     * <b>JEP specification: https://openjdk.java.net/jeps/396</</b>
      * </p>
      */
     private static class AbBeanCopierGenerator extends BeanCopier.Generator {

@@ -19,9 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * JSON 常用操作工具类
+ * JSON common operation tool class
  *
- * @author wacxhs
  */
 public class JsonUtils {
 
@@ -43,11 +42,11 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 将对象转换为JSON字符串
+	 * Convert an object to a JSON string
 	 *
 	 * @param object
-	 *            对象
-	 * @return JSON字符串
+	 *            Object
+	 * @return JSON string
 	 */
 	public static String toJSONString(Object object) {
 		try {
@@ -59,11 +58,11 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 将对象转换为JSON字节数组
+	 * Convert an object to a JSON byte array
 	 *
 	 * @param object
-	 *            对象
-	 * @return JSON字节数组
+	 *            Object
+	 * @return JSON byte array
 	 */
 	public static byte[] toJSONBytes(Object object) {
 		try {
@@ -75,13 +74,13 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 将对象转换为JSON字符串
+	 * Convert an object to a JSON string
 	 *
 	 * @param object
-	 *            对象
+	 *            Object
 	 * @param feature
-	 *            序列化特性
-	 * @return JSON字符串
+	 *            Serialization features
+	 * @return JSON string
 	 */
 	public static String toJSONString(Object object, SerializationFeature... feature) {
 		try {
@@ -94,13 +93,13 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 将对象转换为字符串并指定日期格式
+	 * Convert an object to a string and specify the date format
 	 *
 	 * @param object
-	 *            对象
+	 *            Object
 	 * @param dateFormat
-	 *            日期格式
-	 * @return JSON字符串
+	 *            Date format
+	 * @return JSON string
 	 */
 	public static String toJSONStringWithDateFormat(Object object, String dateFormat) {
 		try {
@@ -113,15 +112,15 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 解析JSON为指定类型对象
+	 * Parse JSON into a specified type of object
 	 *
 	 * @param json
-	 *            JSON字符串
+	 *            JSON string
 	 * @param clazz
-	 *            类型
+	 *            Type
 	 * @param <T>
 	 *            T
-	 * @return 指定类型对象
+	 * @return Specify the type of object
 	 */
 	public static <T> T parseObject(String json, Class<T> clazz) {
 		if (StrUtil.isEmpty(json)) {
@@ -136,15 +135,15 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 解析JSON为指定类型对象
+	 * Parse JSON into a specified type of object
 	 *
 	 * @param jsonBytes
-	 *            JSON字节数组
+	 *            JSON byte array
 	 * @param clazz
-	 *            类型
+	 *            Type
 	 * @param <T>
 	 *            T
-	 * @return 指定类型对象
+	 * @return Specify the type of object
 	 */
 	public static <T> T parseObject(byte[] jsonBytes, Class<T> clazz) {
 		try {
@@ -156,15 +155,15 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 解析JSON为指定类型引用类型对象
+	 * Parse JSON to a specified type reference type object
 	 *
 	 * @param json
-	 *            JSON字符串
+	 *            JSON string
 	 * @param typeReference
-	 *            类型引用
+	 *            Type reference
 	 * @param <T>
 	 *            T
-	 * @return 指定类型对象
+	 * @return Specify the type of object
 	 */
 	public static <T> T parseObject(String json, TypeReference<T> typeReference) {
 		try {
@@ -176,15 +175,15 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 解析JSON为指定类型对象
+	 * Parse JSON into a specified type of object
 	 *
 	 * @param jsonBytes
-	 *            JSON字节数组
+	 *            JSON byte array
 	 * @param typeReference
-	 *            类型引用
+	 *            Type reference
 	 * @param <T>
 	 *            T
-	 * @return 指定类型对象
+	 * @return Specify the type of object
 	 */
 	public static <T> T parseObject(byte[] jsonBytes, TypeReference<T> typeReference) {
 		try {
@@ -196,15 +195,15 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 解析JSON为列表
+	 * Parse JSON into a list
 	 *
 	 * @param json
-	 *            JSON字符串
+	 *            JSON string
 	 * @param clazz
-	 *            类型
+	 *            Type
 	 * @param <T>
 	 *            T
-	 * @return 列表
+	 * @return List
 	 */
 	public static <T> List<T> parseArray(String json, Class<T> clazz) {
 		if (StrUtil.isEmpty(json)) {
@@ -220,22 +219,22 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 将对象转换为JsonNode
+	 * Convert an object to a JsonNode
 	 *
 	 * @param object
-	 *            对象
-	 * @return JSON对象
+	 *            Object
+	 * @return JSON object
 	 */
 	public static JsonNode toJSONNode(Object object) {
 		return OBJECT_MAPPER.valueToTree(object);
 	}
 
 	/**
-	 * 将字符串转换为JsonNode
+	 * Convert a string to a JsonNode
 	 *
 	 * @param jsonStr
-	 *            json字符串
-	 * @return JSON对象
+	 *            json string
+	 * @return JSON object
 	 */
 	public static JsonNode toJSONNode(String jsonStr) {
 		try {
@@ -247,12 +246,12 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 获取JsonNode 属性值
+	 * Get JsonNode attribute value
 	 *
 	 * @param name
-	 *            属性名
+	 *            Attribute name
 	 * @param objectNode
-	 *            json节点
+	 *            json node
 	 * @return
 	 */
 	public static String getValueAsString(String name, JsonNode objectNode) {
@@ -273,33 +272,33 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 解析JSON为指定类型引用类型对象
+	 * Parse JSON to a specified type reference type object
 	 *
 	 * @param json
 	 *            JsonNode
 	 * @param <T>
 	 *            T
-	 * @return 指定类型对象
+	 * @return Specify an object of type
 	 */
 	public static <T> T parseObject(JsonNode json, Class<T> clazz) {
 		return OBJECT_MAPPER.convertValue(json, clazz);
 	}
 
 	/**
-	 * 解析JSON为列表
+	 * Parse JSON into a list
 	 *
 	 * @param json
 	 *            JsonNode
 	 * @param clazz
-	 *            类型
+	 *            Type
 	 * @param <T>
 	 *            T
-	 * @return 列表
+	 * @return List
 	 * @throws IOException
 	 */
 	public static <T> List<T> parseArray(JsonNode json, Class<T> clazz) {
 		if (!json.isArray()) {
-			throw new ApiException(GlobalApiCodes.PARSE_ERROR.formatDefaultMessage("JSON 非 数组形式 "));
+			throw new ApiException(GlobalApiCodes.PARSE_ERROR.formatDefaultMessage("JSON non-array format"));
 		}
 
 		try {
@@ -318,10 +317,10 @@ public class JsonUtils {
 	}
 
 	/**
-	 * 对JSON中出现的特殊字符串做转译
+	 * Translate special strings that appear in JSON
 	 *
-	 * @param str 字符串
-	 * @return 转译后字符串
+	 * @param str String
+	 * @return Translated string
 	 */
 	public static CharSequence escapeString(CharSequence str) {
 		return ESCAPE_JSON.replace(str);

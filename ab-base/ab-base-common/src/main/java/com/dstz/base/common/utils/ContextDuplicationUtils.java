@@ -11,9 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * 上下文复制工具类
+ * Context copy tool class
  *
- * @author wacxhs
  */
 public class ContextDuplicationUtils {
 
@@ -25,9 +24,9 @@ public class ContextDuplicationUtils {
 	}
 
 	/**
-	 * 从上下文中复制出对象
+	 * Copies an object from the context
 	 *
-	 * @return 复制对象
+	 * @return Copy object
 	 */
 	public static Object[] duplicateObjects() {
 		Object[] duplicateObjects = new Object[BeanHolder.CONTEXT_DUPLICATIONS.size()];
@@ -36,9 +35,9 @@ public class ContextDuplicationUtils {
 	}
 
 	/**
-	 * 填充复制对象
+	 * Fill the copied object
 	 *
-	 * @param duplicateObjects 复制对象集
+	 * @param duplicateObjects Copy object set
 	 */
 	public static void fillDuplicateObjects(Object[] duplicateObjects) {
 		if (ArrayUtil.isNotEmpty(duplicateObjects)) {

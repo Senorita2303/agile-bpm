@@ -13,9 +13,8 @@ import org.springframework.core.type.AnnotationMetadata;
 import org.springframework.stereotype.Component;
 
 /**
- * 缓存相关配置
+ * Cache related configuration
  *
- * @author lightning
  */
 @Configuration
 @Import(AbMessageQueueAutoConfiguration.AbCacheConfigurationSelector.class)

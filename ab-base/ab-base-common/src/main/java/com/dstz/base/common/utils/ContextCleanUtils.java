@@ -10,9 +10,8 @@ import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 /**
- * 上下文清理工具类
+ * Context cleaning tool class
  *
- * @author wacxhs
  */
 public class ContextCleanUtils {
 
@@ -21,17 +20,17 @@ public class ContextCleanUtils {
     }
 
     /**
-     * 时机
+     * Timing
      */
     public enum Phase {
 
         /**
-         * 线程运行前后
+         * Before and after thread running
          */
         THREAD,
 
         /**
-         * web请求后
+         * After web request
          */
         REQUEST_COMPLETE
     }
@@ -39,7 +38,7 @@ public class ContextCleanUtils {
     private final static Map<Phase, List<Runnable>> CONTEXT_CLEAN_REGISTRY = MapUtil.newHashMap();
 
     /**
-     * 提升性能，在第一次调用获取所有执行方法
+     * Improve performance, get all executed methods in the first call
      */
     private final static AtomicReference<SingletonSupplier<List<Runnable>>> CLEAN_ALL_REGISTRY = new AtomicReference<>(newCleanAllRegistrySupplier());
 
@@ -48,9 +47,9 @@ public class ContextCleanUtils {
     }
 
     /**
-     * 注册清理方法
+     * Registration cleanup method
      *
-     * @param runnable 清理运行方法
+     * @param runnable Cleanup run method
      */
     public static void register(Runnable runnable, Phase... phases) {
         Assert.state(ArrayUtil.isNotEmpty(phases), "phases parameter must");
@@ -61,9 +60,9 @@ public class ContextCleanUtils {
     }
 
     /**
-     * 执行清理，根据时机调用
+     * Perform cleanup and call according to the timing
      *
-     * @param phases 执行清理
+     * @param phases Perform cleanup
      */
     public static void execute(Phase... phases) {
         if (phases == null) {
@@ -80,7 +79,7 @@ public class ContextCleanUtils {
     }
 
     /**
-     * 执行清理所有
+     * Execute clean all
      */
     public static void executeAll() {
         CLEAN_ALL_REGISTRY.get().obtain().forEach(Runnable::run);

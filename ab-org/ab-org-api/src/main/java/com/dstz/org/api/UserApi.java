@@ -10,17 +10,16 @@ import java.util.Iterator;
 import java.util.Objects;
 
 /**
- * 用户接口
+ * User Interface
  *
- * @author wacxhs
  */
 public interface UserApi {
 
 	/**
-	 * 根据用户ID获取用户
+	 * Get user by user ID
 	 *
-	 * @param userId 用户ID
-	 * @return 用户
+	 * @param userId User ID
+	 * @return User
 	 */
 	default IUser getByUserId(String userId) {
 		Iterator<? extends IUser> iterator = getByUserIds(Collections.singleton(userId));
@@ -28,18 +27,18 @@ public interface UserApi {
 	}
 
 	/**
-	 * 根据用户ID集获取用户记录
+	 * Get user records based on user ID set
 	 *
-	 * @param userIds 用户记录集
-	 * @return 用户记录
+	 * @param userIds User record set
+	 * @return User records
 	 */
 	Iterator<? extends IUser> getByUserIds(Collection<String> userIds);
 
 	/**
-	 * 根据用户名获取用户
+	 * Get user by username
 	 *
-	 * @param username 用户名
-	 * @return 用户
+	 * @param username Username
+	 * @return User
 	 */
 	default IUser getByUsername(String username) {
 		Iterator<? extends IUser> iterator = getByUsernames(Collections.singleton(username));
@@ -47,33 +46,30 @@ public interface UserApi {
 	}
 
 	/**
-	 * 用户名集合获取用户列表
+	 * Get user list from username collection
 	 *
-	 * @param usernames 用户名集
-	 * @return 用户列表
+	 * @param usernames Username set
+	 * @return User list
 	 */
 	Iterator<? extends IUser> getByUsernames(Collection<String> usernames);
 
 	/**
-	 * 根据组类型和组ID集获取用户记录
+	 * Get user records based on group type and group ID set
 	 *
-	 * @param groupType 组类型
-	 * @param groupIds  组ID
-	 * @return 用户记录
+	 * @param groupType Group Type
+	 * @param groupIds  Group ID
+	 * @return User records
 	 */
 	Iterator<? extends IUser> getByGroupTypeAndGroupIds(String groupType, Collection<String> groupIds);
 
 	/**
-	 * 用户查询过滤，做为自定义对护框用户选择弃数据加载来源
+	 * User query filtering, as a custom frame protection user chooses to abandon the data loading source
 	 *
-	 * @param queryParamDTO 查询参数过滤对象
-	 * @return 用户记录
+	 * @param queryParamDTO Query parameter filter object
+	 * @return User records
 	 */
 	default PageListDTO<? extends IUser> queryFilter(QueryParamDTO queryParamDTO) {
 		return null;
 	}
-
-
-
 
 }
