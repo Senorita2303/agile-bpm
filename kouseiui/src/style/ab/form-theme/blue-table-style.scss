@@ -1,0 +1,162 @@
+.gongwen-title {
+  width: 100%;
+  padding-bottom: 25px;
+  margin: auto;
+  margin-bottom: 15px;
+  font-size: 25px;
+  font-weight: 900;
+  color: #01418A;
+  text-align: center;
+  border-bottom: 3px solid #EFEFF0;
+}
+
+.gongwen-table {
+  width: 1200px;
+  min-width: 800px;
+  margin: auto;
+  margin-bottom: 30px !important;
+  table-layout: fixed;
+  border-collapse: collapse;
+  border: 1px solid #C8D4E2;
+}
+
+.gongwen-table tr {
+  height: 30px !important;
+  border: 1px solid #C8D4E2;
+}
+
+.gongwen-table td {
+  padding-right: 10px;
+  padding-left: 10px;
+  border: 1px solid #CBDCF0;
+}
+
+.gongwen-table th {
+  //width: 120px;
+  height: 40px;
+  color: #01418A;
+  background-color: #EEF6FF;
+  border-bottom: 1px solid #C8D4E2;
+}
+
+.gongwen-table td .ivu-input {
+  border: none;
+}
+
+.gongwen-table td .el-textarea {
+  max-width: 100% !important;
+}
+
+.gongwen-table td .el-input {
+  max-width: 100% !important;
+}
+
+.gongwen-table td .ivu-input-group-append {
+  border: none;
+}
+
+.subtable-box {
+  width: 100%;
+  overflow: auto;
+}
+
+.subtable-gongwen {
+  width: 100%;
+  margin: auto;
+  margin-top: 5px;
+  margin-bottom: 10px !important;
+  border-collapse: collapse;
+  border: 1px solid #EDF6FF;
+}
+
+.subtable-gongwen .ivu-input-wrapper {
+  border: none;
+}
+
+.subtable-gongwen .ivu-input {
+  border: none;
+}
+
+.subtable-gongwen .ivu-select-selection {
+  border: none
+}
+
+.subtable-gongwen th {
+  min-width: 110px;
+  height: 40px;
+  padding: 5px 0px 5px 0px;
+  font-size: medium;
+  background-color: #EDF6FF;
+  border: 1px solid #CBDCF0;
+}
+
+.subtable-gongwen td {
+  min-width: 110px;
+  border: 1px solid #CBDCF0;
+}
+
+.subtable-title-gongwen {
+  display: block;
+  width: 100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: 900;
+  color: #1b72db;
+  text-align: left;
+  background-color: #FAFAFC;
+}
+
+.subtable-toolbar-gongwen {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 100%;
+  margin: 20px auto;
+
+}
+
+// Make the border thinner
+.gongwen-table .el-input__wrapper {
+  box-shadow: 0 0 0 0.5px var(--el-input-border-color, var(--el-border-color)) inset;
+}
+
+.subtable-gongwen td .ivu-input {
+  border: none;
+}
+
+.subtable-table td .ivu-input {
+  border: none;
+}
+
+.gongwen-table .ql-container.ql-snow {
+  border: none;
+}
+
+.gongwen-table .ql-toolbar.ql-snow {
+  border: none;
+  border-bottom: 1px solid #CBDCF0;
+}
+
+.gongwen-table td .ivu-input .el-input-group__append {
+  background-color: white;
+  border: none;
+  border-left: 1px solid #CBDCF0;
+}
+
+.subtable-toolbar-gongwen>* {
+  margin-right: 10px;
+}
+
+.gongwen-table td .ivu-input-group-append {
+  background-color: white;
+  border: none;
+}
+
+.subtable-gongwen td .ivu-input-group-append {
+  background-color: white;
+  border: none;
+}

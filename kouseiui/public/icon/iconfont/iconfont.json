@@ -1,0 +1,44 @@
+{
+  "id": "725301",
+  "name": "eFlowApp",
+  "font_family": "eicon",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "11124956",
+      "name": "首页",
+      "font_class": "1",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "1793603",
+      "name": "菜单模式",
+      "font_class": "caidanmoshi",
+      "unicode": "e665",
+      "unicode_decimal": 58981
+    },
+    {
+      "icon_id": "3199599",
+      "name": "菜单管理",
+      "font_class": "drxx11",
+      "unicode": "e715",
+      "unicode_decimal": 59157
+    },
+    {
+      "icon_id": "1280871",
+      "name": "fullscreen",
+      "font_class": "fullscreen",
+      "unicode": "e637",
+      "unicode_decimal": 58935
+    },
+    {
+      "icon_id": "3323209",
+      "name": "exit-fullscreen-o",
+      "font_class": "exit-fullscreen-o",
+      "unicode": "e99d",
+      "unicode_decimal": 59805
+    }
+  ]
+}

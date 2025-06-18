@@ -1,0 +1,126 @@
+// Blue official document style form template style
+@import './blue-table-style.scss';
+// Red table
+@import './red-table-style.scss';
+
+.el-form-item__label {
+  padding: 0 10px 0 0 !important;
+}
+
+.el-form--inline {
+  .el-select {
+    width: 192px !important;
+  }
+}
+
+.el-form {
+  .el-select {
+    min-width: 192px !important;
+  }
+}
+
+
+// Used to check the style of the display prompt in the top middle position
+.top-notification {
+  inset: 24px auto auto 50%;
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  transform: translateX(-50%);
+}
+
+// Subtable title part
+span.title {
+  margin-right: 20px;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 26px;
+  color: #3892f2;
+}
+
+
+// AgileBPM check processing, red box
+.ab-is-error .el-input__wrapper {
+  box-shadow: 0 0 0 1px var(--el-color-danger) inset !important;
+}
+
+.ab-is-error .el-checkbox {
+  color: #ff4d4f;
+}
+
+.ab-is-error .el-radio {
+  color: #ff4d4f;
+}
+
+.ab-is-error .el-upload--picture-card {
+  border: 1px dashed #ff4d4f;
+}
+
+
+.ab-is-error .el-textarea {
+  --el-input-border-color: #ff4d4f;
+}
+
+// popper prompts an exception
+.el-popper.is-ab-error {
+  /* Set padding to ensure the height is 32px */
+  padding: 6px 12px;
+  //color:red;
+  background: linear-gradient(90deg, rgb(159, 229, 151), rgb(204, 229, 129))
+}
+
+.el-popper.is-ab-error .el-popper__arrow::before {
+  right: 0;
+  background: linear-gradient(45deg, #b2e68d, #bce689);
+}
+
+
+
+.ab-table {
+  width: 100%;
+  font-size: 12px;
+  background-color: #fff;
+}
+
+.ab-table thead {
+  height: 32px;
+}
+
+.ab-table tr {
+  height: 25px;
+}
+
+.ab-table table>thead>tr {
+  background-color: #eee;
+}
+
+.ab-table thead th {
+  width: auto;
+  min-width: 90px;
+  height: 32px;
+  font-weight: 700;
+  text-align: center;
+  background-color: #f3f3f3;
+}
+
+.ab-table th {
+  width: 15%;
+  height: 32px;
+  padding: 0 7px 0 7px;
+  font-weight: 400;
+  color: #7a7a83;
+  text-align: left;
+  background-color: #fff;
+  border: 0 solid #fff;
+}
+
+.ab-table td {
+  padding: 0;
+  font-weight: 400;
+  text-align: center;
+  border: 0 solid #fff;
+}
+
+.ab-table-sn {
+  width: 50px !important;
+  min-width: 0px !important;
+}

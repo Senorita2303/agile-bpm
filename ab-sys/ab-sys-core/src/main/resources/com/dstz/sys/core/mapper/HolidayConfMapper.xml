@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.HolidayConfMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="HolidayConf" type="com.dstz.sys.core.entity.HolidayConf">
+        <id column="id_" property="id"/>
+        <result column="name_" property="name"/>
+        <result column="system_" property="system"/>
+        <result column="year_" property="year"/>
+        <result column="start_day_" property="startDay"/>
+        <result column="end_day_" property="endDay"/>
+        <result column="type_" property="type"/>
+        <result column="remark_" property="remark"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="create_by_" property="createBy"/>
+        <result column="create_org_id_" property="createOrgId"/>
+        <result column="update_time_" property="updateTime"/>
+        <result column="updater_" property="updater"/>
+        <result column="update_by_" property="updateBy"/>
+    </resultMap>
+
+    <select id="isExist" parameterType="java.util.Map" resultMap="HolidayConf">
+        select * from c_holiday_conf
+        <where>
+            <if test="startDay!=null">
+                start_day_=#{startDay,jdbcType=DATE}
+            </if>
+            <if test="endDay!=null">
+                and end_day_=#{endDay,jdbcType=DATE}
+            </if>
+            <if test="name!=null">
+                and name_=#{name,jdbcType=VARCHAR}
+            </if>
+        </where>
+    </select>
+</mapper>

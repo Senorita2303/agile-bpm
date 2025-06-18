@@ -1,0 +1,169 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/a5_gitee_full?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: Senorita1610
+  session: 
+    store-type: none
+    # 会话时长(单位：秒)
+    timeout: 1800
+    #session存储类型  none , redis，分布式下请使用Redis
+    redis:
+      namespace: ab:session
+  redis:
+    host: localhost
+    port: 6379
+    database: 5
+    password:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  activiti:
+    database-schema-update: none
+  servlet:
+    multipart:
+      max-request-size: "64MB"
+      max-file-size: "64MB"
+logging:
+  level:
+    root: INFO
+    com:
+      dstz: DEBUG
+      baomidou: DEBUG
+    org:
+      springframework:
+        jdbc:
+          core: DEBUG
+        data:
+          redis: ERROR
+      mongodb:
+        driver: INFO
+    io:
+      lettuce: ERROR
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+ab:
+  cache:
+    # 缓存类型 memory：内存
+    type: memory
+    # 缓存区域，定义各个缓存区域过期时间
+    region:
+      # 字典
+      DICT: PT12H
+      # 系统属性
+      SYSPROPETIES: PT12H
+      # 流程定义
+      BPM_PROCESS_DEF: PT12H
+      # 流程定义
+      BPM_ACT_PROCESS_DEF: PT12H
+      # 资源相关
+      SYS_RESOURCE: PT12H
+      # 登录相关
+      LOGIN_TOKEN: PT1H
+      #操作日志相关
+      AUDIT_LOG_META: PT12H
+      #消息相关 AccessToken的过期KEY 1.5h过期，提前自我过期重新获取
+      MSG_REGION:  PT60M
+      #第三方登录
+      THIRD_TOKEN: PT115M
+      #密码验证
+      PWD_TOKEN: PT1H
+      #业务对象
+      BIZ_OBJECT: PT12H
+      #数据源
+      SYS_DATA_SOURCE: PT12H
+      #oauth
+      OAUTH_REGION: PT12H
+      #自定义列表
+      BIZ_CHART: PT1000H
+      #自定义对话框
+      BIZ_CUST_DIALOG: PT12H
+      # 数据权限
+      DATA_PRIVILEGE: PT12H
+      # 系统应用
+      SYS_APPLICATION: PT30M
+      # 系统会话属性
+      SYS_SESSION_ATTRIBUTE: PT15M
+    #鉴权
+  security:
+    ## 忽略鉴权的URL
+    auth-ingores:
+      - /login.*
+      - /error
+      - /logout
+      - /index.html
+      - /favicon.ico
+      - /login/dstz
+      - login/*
+      - /tenant/resource/*
+      - /ab-org/auth/login*
+      - /ab-org/auth/login/*
+      - /ab-org/auth/getToken
+      - /ab-org/auth/refreshToken
+      - /ab-bpm/sys/licenceInfo
+      - /ab-bpm/sys/sysFile/view/*
+      - /ab-org/auth/quickLogin*
+      - /ab-bpm/sys/sysConfiguration/getConfByCode/qywx
+      - /ab-bpm/sys/sysFile/download*
+      - /ab-bpm/sys/sysFile/update
+
+    ## 忽略防盗链的URL
+    csrf-ingores:
+      - 127.0.0.1
+      - localhost
+
+    # 最大会话数  -1：表示会话不受任何限制   0：限制除登陆用户最后一次登陆会话，其它会话都失效  大于0：限制用户下最大会话数
+    maximum-sessions: -1
+
+  oauth:
+    ## token存储方案 InMemory:本地内存 ，redis
+    token-store-type: InMemory
+    ##令牌校验秘钥
+    login-token-signing-key: ab22
+
+  simple-mq:
+    ## mq 队列配置：redis ：使用Redis做队列；synchronous: 同步，不使用队列；jms: activemq作为队列  discard: 丢弃模式，调用JmsProducer不做任何处理
+    ## http://doc.a5.tongzhouyun.com/guide/system-setting/mqMessage.html
+    message-queue-type: synchronous
+  # Rest 接口调用转发时中继的 Token 配置
+  rest-client-info-transform:
+    headers:
+      - name: Authorization
+  # 开启定时任务
+  schedule:
+    enable: false
+
+# j2cache 缓存配置
+j2cache:
+  level2:
+    # 二级缓存开启
+    cache-open: false
+  broadcast:
+    # 开启广播通知
+    open: ${j2cache.level2.cache-open}
+xxljob:
+  # 调度中心部署跟地址 [选填]：如调度中心集群部署存在多个地址则用逗号分隔。执行器将会使用该地址进行"执行器心跳注册"和"任务结果回调"；为空则关闭自动注册；
+  admin-addresses: http://192.168.1.5:8080/xxl-job-admin
+  # 执行器通讯TOKEN [选填]：非空时启用；
+  # access-token:
+  #  执行器AppName [选填]：执行器心跳注册分组依据；为空则关闭自动注册
+  app-name: agile-bpm
+  # 执行器注册 [选填]：优先使用该配置作为注册地址，为空时使用内嵌服务 ”IP:PORT“ 作为注册地址。从而更灵活的支持容器类型执行器动态IP和动态映射端口问题。
+  #  executor-address:
+  # 执行器IP [选填]：默认为空表示自动获取IP，多网卡时可手动设置指定IP，该IP不会绑定Host仅作为通讯实用；地址信息用于 "执行器注册" 和 "调度中心请求并触发任务"；
+  #  executor-ip:
+  # 执行器端口号 [选填]：小于等于0则自动获取；默认端口为9999，单机部署多个执行器时，注意要配置不同执行器端口；
+  #  executor-port:
+  # 执行器运行日志文件存储磁盘路径 [选填] ：需要对该路径拥有读写权限；为空则使用默认路径；
+  executor-log-path: ${java.io.tmpdir}logs/xxl-job/jobhandler
+  # 执行器日志文件保存天数 [选填] ： 过期日志自动清理, 限制值大于等于3时生效; 否则, 如-1, 关闭自动清理功能；
+#  executor-log-retention-days: 7
+
+## 上传配置： db 存数据库 ；ordinary 存本地磁盘，需要配置 uploader.ordinary.path存储目录。minio 需要ab:minio相关配置  具体请看 IUploader 实现类
+uploader:
+  default: db

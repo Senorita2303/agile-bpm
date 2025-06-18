@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.org.core.mapper.OrgUserMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="User" type="com.dstz.org.core.entity.OrgUser">
+        <id column="id_" property="id"/>
+        <result column="fullname_" property="fullname"/>
+        <result column="account_" property="account"/>
+        <result column="password_" property="password"/>
+        <result column="email_" property="email"/>
+        <result column="mobile_" property="mobile"/>
+        <result column="weixin_" property="weixin"/>
+        <result column="address_" property="address"/>
+        <result column="photo_" property="photo"/>
+        <result column="sex_" property="sex"/>
+        <result column="signature_" property="signature"/>
+        <result column="from_" property="from"/>
+        <result column="status_" property="status"/>
+        <result column="openid_" property="openid"/>
+        <result column="expire_date_" property="expireDate"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="create_by_" property="createBy"/>
+        <result column="create_org_id_" property="createOrgId"/>
+        <result column="update_time_" property="updateTime"/>
+        <result column="updater_" property="updater"/>
+        <result column="update_by_" property="updateBy"/>
+    </resultMap>
+
+
+    <resultMap id="ResourceUserVO" type="com.dstz.org.vo.ResourceUserVO">
+        <id column="id_" property="id"/>
+        <result column="fullname_" property="fullname"/>
+        <result column="account_" property="account"/>
+        <result column="status_" property="status"/>
+    </resultMap>
+
+    <resultMap id="OrgUserListJsonVO" type="com.dstz.org.vo.OrgUserListJsonVO">
+        <id column="id_" property="id"/>
+        <result column="fullname_" property="fullname"/>
+        <result column="account_" property="account"/>
+        <result column="email_" property="email"/>
+        <result column="mobile_" property="mobile"/>
+        <result column="sex_" property="sex"/>
+        <result column="status_" property="status"/>
+        <result column="create_time_" property="createTime"/>
+    </resultMap>
+
+
+    <!--列表页 查询数据-->
+    <select id="queryUserList" parameterType="java.util.Map" resultMap="OrgUserListJsonVO">
+        SELECT id_,fullname_,account_,email_,mobile_,sex_,status_,create_time_ FROM org_user
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+    <select id="query" parameterType="java.util.Map" resultMap="User">
+        SELECT * FROM org_user
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+    <!-- 查询系统中用户是否已存在   -->
+    <select id="isUserExist" resultType="java.lang.Integer">
+        SELECT count(1) FROM org_user where account_=#{account}
+        <if test="id!=null">
+            and id_!=#{id}
+        </if>
+    </select>
+
+
+    <!-- 获取角色用户，组织用户 -->
+    <select id="getUserListByRelation" parameterType="java.util.Map" resultMap="User">
+        SELECT distinct orgUser.* FROM org_user orgUser
+        left join org_relation relation on relation.user_id_ = orgUser.id_
+        where
+        <if test="relationType.equals('groupUser')">relation.group_id_ = #{relationId}</if>
+        <if test="relationType.equals('userRole')">relation.role_id_ = #{relationId}</if>
+        and relation.type_ !='groupRole'
+        and relation.status_ =1 and orgUser.status_=1
+    </select>
+
+    <select id="getUserListByPost" parameterType="java.util.Map" resultMap="User">
+        SELECT orgUser.*
+        FROM org_user orgUser
+                 left join org_relation relation on relation.user_id_ = orgUser.id_
+        WHERE relation.type_ = 'groupUserRole'
+          and relation.group_id_ = #{groupId}
+          and relation.role_id_ = #{roleId}
+          and relation.status_ = 1
+          and orgUser.status_ = 1
+    </select>
+
+    <select id="getUserListByGroupPath" parameterType="java.lang.String" resultMap="User">
+        select a.*
+        from org_user a
+                 inner join org_relation b on a.status_ = '1' and a.id_ = b.user_id_
+                 inner join org_group c on b.group_id_ = c.id_
+        where c.path_ LIKE #{path}
+    </select>
+
+
+    <update id="updateByPrimaryKeySelective" parameterType="com.dstz.org.core.entity.OrgUser">
+        update org_user
+        <set>
+            <if test="fullname != null">
+                fullname_ = #{fullname,jdbcType=VARCHAR},
+            </if>
+            <if test="account != null">
+                account_ = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null">
+                password_ = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="email != null">
+                email_ = #{email,jdbcType=VARCHAR},
+            </if>
+            <if test="mobile != null">
+                mobile_ = #{mobile,jdbcType=VARCHAR},
+            </if>
+            <if test="weixin != null">
+                weixin_ = #{weixin,jdbcType=VARCHAR},
+            </if>
+            <if test="address != null">
+                address_ = #{address,jdbcType=VARCHAR},
+            </if>
+            <if test="photo != null">
+                photo_ = #{photo,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null">
+                sex_ = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="signature,jdbcType=VARCHAR != null">
+                signature_ = #{signature,jdbcType=VARCHAR},
+            </if>
+            <if test="from != null">
+                from_ = #{from,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                status_ = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="openid != null">
+                openid_ = #{openid,jdbcType=VARCHAR},
+            </if>
+            <if test="expireData != null">
+                expire_data_=#{expireData,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createTime != null">
+                create_time_ = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="createBy != null">
+                create_by_ = #{createBy,jdbcType=VARCHAR},
+            </if>
+            <if test="createOrgId != null">
+                create_org_id_ = #{createOrgId,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null">
+                update_time_ = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updater != null">
+                updater_ = #{updater,jdbcType=VARCHAR},
+            </if>
+            <if test="updateBy != null">
+                update_by_ = #{updateBy,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where id_ = #{id,jdbcType=VARCHAR}
+    </update>
+
+
+    <select id="getUserByResource" parameterType="java.util.Map" resultMap="ResourceUserVO">
+        select DISTINCT u.* from org_user u
+        inner join org_relation r on u.id_ = r.user_id_
+        inner join sys_res_role resRole on resRole.ROLE_ID_ = r.role_id_
+        where resRole.RES_ID_ = #{resourceId}
+        <if test="whereSql!=null">
+            and ${whereSql}
+        </if>
+    </select>
+
+    <select id="queryUser" parameterType="java.util.Map" resultMap="User">
+        SELECT DISTINCT a.* FROM org_user a
+        <if test="group_id_!=null">
+            INNER JOIN org_relation b on a.id_ = b.user_id_ and b.status_ = 1
+        </if>
+        where a.status_ = 1
+        <if test="whereSql!=null">
+            and ${whereSql}
+        </if>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+</mapper>

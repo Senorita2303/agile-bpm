@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.WorkCalendarMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="WorkCalendar" type="com.dstz.sys.core.entity.WorkCalendar">
+        <id column="id_" property="id" />
+        <result column="day_" property="day" />
+        <result column="is_work_day_" property="isWorkDay"/>
+        <result column="type_" property="type" />
+        <result column="system_" property="system" />
+    </resultMap>
+
+    <select id="getByDay"   parameterType="java.util.Map" resultMap="WorkCalendar">
+        SELECT * FROM c_work_calendar
+        WHERE
+            day_=#{day,jdbcType=DATE}
+    </select>
+
+    <select id="getByPeriod" parameterType="java.util.Map" resultMap="WorkCalendar">
+        SELECT * FROM c_work_calendar
+        WHERE
+            day_ BETWEEN #{startDay,jdbcType=DATE} AND #{endDay,jdbcType=DATE}
+          AND system_='public'
+    </select>
+
+    <select id="getByPeriodAndSystem" parameterType="java.util.Map" resultMap="WorkCalendar">
+        SELECT * FROM c_work_calendar
+        WHERE
+            day_ BETWEEN #{startDay,jdbcType=DATE} AND #{endDay,jdbcType=DATE}
+          AND system_=#{system,jdbcType=VARCHAR}
+        ORDER BY day_ ASC
+    </select>
+
+    <select id="getByPeriodAndSystemContainPublic" parameterType="java.util.Map" resultMap="WorkCalendar">
+        SELECT * from c_work_calendar
+        where day_ BETWEEN #{startDay,jdbcType=DATE} AND #{endDay,jdbcType=DATE}
+          AND system_ = #{system,jdbcType=VARCHAR}
+        UNION SELECT * from c_work_calendar WHERE day_ BETWEEN #{startDay,jdbcType=DATE} AND #{endDay,jdbcType=DATE}
+                                              AND day_ NOT IN (select day_ from c_work_calendar where day_ BETWEEN #{startDay,jdbcType=DATE} AND #{endDay,jdbcType=DATE} AND system_ = #{system,jdbcType=VARCHAR})
+        ORDER BY day_ ASC
+    </select>
+
+    <select id="getWorkDayByDays" parameterType="java.util.Map" resultMap="WorkCalendar">
+        select *
+        from c_work_calendar
+        where day_ &gt;= #{startDay,jdbcType=DATE}
+          AND system_ = 'public'
+          and is_work_day_ = '1'
+        ORDER BY day_ limit #{days}, 1
+    </select>
+
+    <select id="getWorkDayByDaysAndSystem" parameterType="java.util.Map" resultMap="WorkCalendar">
+        select *
+        from c_work_calendar
+        where day_ &gt;= #{startDay,jdbcType=DATE}
+          AND system_ = #{system,jdbcType=VARCHAR}
+          AND isWorkDay_ = '1'
+        UNION
+        SELECT *
+        from c_work_calendar
+        WHERE day_ &gt;= #{startDay,jdbcType=DATE}
+          AND day_ NOT IN (select day_
+                           from c_work_calendar
+                           where day_ &gt;= #{startDay,jdbcType=DATE} AND system_ = #{system,jdbcType=VARCHAR})
+          AND system_ = 'public'
+          AND is_work_day_ = '1'
+        ORDER BY day_ limit #{days}, 1
+    </select>
+
+    <select id="getByDayAndSystem" parameterType="java.util.Map" resultMap="WorkCalendar">
+        SELECT * FROM c_work_calendar
+        WHERE day_ = #{day,jdbcType=DATE}
+          AND system_ = #{system,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateWorkType" parameterType="java.util.Map">
+        UPDATE c_work_calendar
+        SET is_work_day_ = #{isWorkDay,jdbcType=VARCHAR},
+            type_=CONCAT(type, #{type,jdbcType=VARCHAR})
+        WHERE day_ BETWEEN #{startDay,jdbcType=DATE} and #{endDay,jdbcType=DATE}
+    </update>
+
+</mapper>

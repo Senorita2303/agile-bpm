@@ -1,0 +1,12 @@
+{
+  "name": "abDesigner",
+  "version": "1.8.0",
+  "description": "Process Designer",
+  "main": "bpmn-designer.umd.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "当前组件的版权归深圳市大世同舟信息科技有限公司所有，本开源项目依赖改组件仅限个人用户试用。存在任何商业用途的请联系我们自行取得版权。"
+}

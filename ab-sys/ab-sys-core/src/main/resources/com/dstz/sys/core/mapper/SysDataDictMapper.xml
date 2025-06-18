@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysDataDictMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysDataDict" type="com.dstz.sys.core.entity.SysDataDict">
+        <id column="id_" property="id" />
+        <result column="parent_id_" property="parentId" />
+        <result column="code_" property="code" />
+        <result column="name_" property="name" />
+        <result column="dict_key_" property="dictKey" />
+        <result column="type_code_" property="typeCode" />
+        <result column="disable_" property="disable" />
+        <result column="sn_" property="sn" />
+        <result column="dict_type_" property="dictType" />
+        <result column="extend1" property="extend1" />
+        <result column="extend2" property="extend2" />
+        <result column="is_system_" property="isSystem" />
+        <result column="create_time_" property="createTime" />
+        <result column="create_by_" property="createBy" />
+        <result column="create_org_id_" property="createOrgId" />
+        <result column="update_time_" property="updateTime" />
+        <result column="updater_" property="updater" />
+        <result column="update_by_" property="updateBy" />
+    </resultMap>
+
+    <select id="getByParentId"   parameterType="java.lang.String" resultMap="SysDataDict">
+        SELECT * FROM sys_data_dict
+        WHERE
+            parent_id_=#{id}
+    </select>
+
+    <select id="getDictNodeList"   parameterType="java.util.Map"  resultMap="SysDataDict">
+        SELECT * FROM sys_data_dict  WHERE  dict_key_= #{dictKey}
+        <if test="!hasRoot">and dict_type_ = 'node'</if> order by sn_,create_time_ desc,id_ desc
+    </select>
+
+    <select id="isExistDict"   parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(*) FROM sys_data_dict  WHERE  code_= #{code} and dict_type_ = 'dict'
+        <if test="id!=null"> and id_ != #{id}</if>
+    </select>
+
+    <select id="isExistNode"   parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(*) FROM sys_data_dict  WHERE  dict_key_= #{dictKey} and code_= #{code} and dict_type_ = 'node'
+        <if test="id!=null"> and id_ != #{id}</if>
+    </select>
+
+
+
+
+</mapper>

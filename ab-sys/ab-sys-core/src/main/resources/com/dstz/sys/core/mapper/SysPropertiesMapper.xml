@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysPropertiesMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysProperties" type="com.dstz.sys.core.entity.SysProperties">
+        <id column="id_" property="id" />
+        <result column="code_" property="code" />
+        <result column="name_" property="name" />
+        <result column="value_" property="value" />
+        <result column="desc_" property="desc" />
+        <result column="encrypt_" property="encrypt" />
+        <result column="environment_" property="environment" />
+        <result column="type_code_" property="typeCode" />
+        <result column="create_time_" property="createTime" />
+        <result column="create_by_" property="createBy" />
+        <result column="create_org_id_" property="createOrgId" />
+        <result column="update_time_" property="updateTime" />
+        <result column="updater_" property="updater" />
+        <result column="update_by_" property="updateBy" />
+    </resultMap>
+
+    <select id="isExist" resultType="java.lang.Integer">
+        SELECT count(1) FROM sys_properties where code_=#{code}
+        <if test="id!=null">
+            and id_!=#{id}
+        </if>
+        <if test="environment!=null">
+            and environment_ = #{environment}
+        </if>
+    </select>
+
+    <select id="query" parameterType="java.util.Map" resultMap="SysProperties">
+        SELECT id_, code_, name_, value_, desc_, encrypt_,environment_,type_code_,
+        create_time_, create_by_, create_org_id_, update_time_, updater_, update_by_ FROM sys_properties
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null || orderBySql = ''">
+            ORDER BY create_time_ DESC
+        </if>
+    </select>
+</mapper>
