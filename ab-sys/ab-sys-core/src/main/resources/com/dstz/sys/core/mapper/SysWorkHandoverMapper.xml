@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysWorkHandoverMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysWorkHandover" type="com.dstz.sys.core.entity.SysWorkHandover">
+        <id column="id_" property="id"/>
+        <result column="handover_user_id_" property="handoverUserId"/>
+        <result column="receive_user_id_" property="receiveUserId"/>
+        <result column="receive_chain_" property="receiveChain"/>
+        <result column="desc_" property="desc"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="create_by_" property="createBy"/>
+        <result column="creator_" property="creator"/>
+    </resultMap>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysWorkHandoverVO" type="com.dstz.sys.rest.model.vo.SysWorkHandoverVO">
+        <id column="id_" property="id"/>
+        <result column="handover_user_id_" property="handoverUserId"/>
+        <result column="receive_user_id_" property="receiveUserId"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="handover_name_" property="handoverName"/>
+        <result column="receive_name_" property="receiveName"/>
+        <result column="desc_" property="desc"/>
+    </resultMap>
+
+
+    <select id="query" parameterType="java.util.Map" resultMap="SysWorkHandoverVO">
+        SELECT
+            wh.id_,
+            wh.handover_user_id_,
+            h.fullname_  handover_name_,
+            r.fullname_  receive_name_,
+            wh.create_time_,
+            wh.desc_
+        FROM sys_work_handover wh
+                 LEFT JOIN org_user h ON h.id_ = wh.handover_user_id_
+                 LEFT JOIN org_user r ON r.id_ = wh.receive_user_id_
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+
+
+    <select id="selectByReceiveUserId" parameterType="string" resultMap="SysWorkHandover">
+        SELECT *
+        FROM sys_work_handover
+        WHERE receive_user_id_ = #{receiveUserId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="countByHandoverUserIdAndReceiveUserId" parameterType="map" resultType="int">
+        SELECT COUNT(*)
+        FROM sys_work_handover
+        WHERE handover_user_id_ = #{handoverUserId,jdbcType=VARCHAR}
+          AND receive_user_id_ = #{receiveUserId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByHandoverUserId" parameterType="string" resultMap="SysWorkHandover">
+        SELECT *
+        FROM sys_work_handover
+        WHERE handover_user_id_ = #{handoverUserId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="countByHandoverUserId" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM sys_work_handover
+        WHERE handover_user_id_ = #{handoverUserId,jdbcType=VARCHAR}
+    </select>
+
+    <select id="selectByReceiveChainLike" parameterType="string" resultMap="SysWorkHandover">
+        SELECT *
+        FROM sys_work_handover
+        WHERE receive_chain_ LIKE #{receiveChain,jdbcType=VARCHAR}
+    </select>
+
+    <delete id="deleteByIds" parameterType="collection">
+        DELETE FROM sys_work_handover WHERE id_ IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id,jdbcType=VARCHAR}</foreach>
+    </delete>
+
+    <select id="selectByIds" parameterType="collection" resultMap="SysWorkHandover">
+        SELECT * FROM sys_work_handover WHERE id_ IN
+        <foreach collection="ids" item="id" open="(" separator="," close=")">#{id,jdbcType=VARCHAR}</foreach>
+    </select>
+</mapper>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysSerialNoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysSerialNo" type="com.dstz.sys.core.entity.SysSerialNo">
+        <id column="id_" property="id"/>
+        <result column="name_" property="name"/>
+        <result column="code_" property="code"/>
+        <result column="rule_" property="rule"/>
+        <result column="type_" property="type"/>
+        <result column="no_length_" property="noLength"/>
+        <result column="step_length_" property="stepLength"/>
+        <result column="now_date_" property="nowDate"/>
+        <result column="initial_value_" property="initialValue"/>
+        <result column="now_value_" property="nowValue"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="create_by_" property="createBy"/>
+        <result column="create_org_id_" property="createOrgId"/>
+        <result column="update_time_" property="updateTime"/>
+        <result column="updater_" property="updater"/>
+        <result column="update_by_" property="updateBy"/>
+    </resultMap>
+
+    <update id="updByCode" parameterType="com.dstz.sys.rest.model.vo.SysSerialNoVO">
+        UPDATE sys_serialno
+        SET now_date_=#{nowDate,jdbcType=VARCHAR},
+            now_value_=#{newNowValue,jdbcType=NUMERIC}
+        WHERE code_ = #{code,jdbcType=VARCHAR}
+          and now_value_ = #{nowValue,jdbcType=NUMERIC}
+    </update>
+
+
+    <select id="isCodeExisted" resultType="java.lang.Integer">
+        select count(*) from sys_serialno where code_=#{code}
+        <if test="id!=null">AND id_ !=#{id}</if>
+    </select>
+
+    <select id="getByCode" parameterType="String" resultMap="SysSerialNo">
+        SELECT *
+        FROM sys_serialno
+        WHERE code_ = #{code}
+    </select>
+</mapper>

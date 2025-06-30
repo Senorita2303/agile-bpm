@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.auth.core.mapper.SysResourceMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysResource" type="com.dstz.auth.core.entity.SysResource">
+        <id column="id_" property="id"/>
+        <result column="app_id_" property="appId"/>
+        <result column="code_" property="code"/>
+        <result column="name_" property="name"/>
+        <result column="url_" property="url"/>
+        <result column="enable_" property="enable"/>
+        <result column="opened_" property="opened"/>
+        <result column="is_api_" property="isApi"/>
+        <result column="icon_" property="icon"/>
+        <result column="type_" property="type"/>
+        <result column="sn_" property="sn"/>
+        <result column="parent_id_" property="parentId"/>
+        <result column="path_" property="path"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="create_by_" property="createBy"/>
+        <result column="create_org_id_" property="createOrgId"/>
+        <result column="update_time_" property="updateTime"/>
+        <result column="updater_" property="updater"/>
+        <result column="update_by_" property="updateBy"/>
+    </resultMap>
+
+    <select id="query" parameterType="java.util.Map" resultMap="SysResource">
+        SELECT id_, app_id_, code_, name_, url_, enable_, opened_, is_api_, icon_, type_, sn_, parent_id_, path_,
+        create_time_, create_by_, create_org_id_, update_time_, updater_, update_by_ FROM sys_resource
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+
+    <select id="getBySystemId" parameterType="java.lang.String" resultMap="SysResource">
+		SELECT * FROM sys_resource  WHERE  app_id_=#{appId} order by sn_ asc, id_ asc
+	</select>
+
+    <select id="getBySystemAndRole" parameterType="java.util.Map" resultMap="SysResource">
+		SELECT a.* FROM sys_resource a, sys_resource_role b
+		WHERE  a.id_=b.resource_id_ AND 	b.ROLE_id_=#{roleId}  AND b.app_id_=#{appId} AND b.half_checked_ = 0
+		order by a.sn_ asc, a.id_ asc
+	</select>
+
+    <select id="isExist" resultType="java.lang.Integer">
+        SELECT count(1) FROM sys_resource where code_=#{code} and app_id_=#{appId}
+        <if test="id!=null">
+            and id_!=#{id}
+        </if>
+    </select>
+
+    <select id="getByParentId" parameterType="java.lang.String" resultMap="SysResource">
+		SELECT * FROM sys_resource  WHERE  parent_id_=#{parentId}
+	</select>
+
+    <select id="getByAppIdAndRoleIds" resultMap="SysResource">
+        SELECT DISTINCT a.id_,
+                        a.app_id_,
+                        a.code_,
+                        a.name_,
+                        a.url_,
+                        a.enable_,
+                        a.opened_,
+                        a.is_api_,
+                        a.icon_,
+                        a.type_,
+                        a.sn_,
+                        a.parent_id_,
+                        a.path_
+        FROM sys_resource a
+                 LEFT JOIN sys_resource_role b ON b.resource_id_ = a.id_
+        WHERE a.app_id_ = #{appId,jdbcType=VARCHAR}
+          AND b.role_id_ IN <foreach collection="roleIds" item="roleId" open="(" separator="," close=")">#{roleId,jdbcType=VARCHAR}</foreach>
+        ORDER BY a.sn_, a.id_
+	</select>
+</mapper>

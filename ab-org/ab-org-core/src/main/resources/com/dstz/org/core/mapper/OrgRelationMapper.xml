@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.org.core.mapper.OrgRelationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="OrgRelation" type="com.dstz.org.core.entity.OrgRelation">
+        <id column="id_" property="id" />
+        <result column="group_id_" property="groupId" />
+        <result column="user_id_" property="userId" />
+        <result column="is_master_" property="isMaster" />
+        <result column="role_id_" property="roleId" />
+        <result column="status_" property="status" />
+        <result column="type_" property="type" />
+        <result column="create_time_" property="createTime" />
+        <result column="create_by_" property="createBy" />
+        <result column="create_org_id_" property="createOrgId" />
+        <result column="update_time_" property="updateTime" />
+        <result column="updater_" property="updater" />
+        <result column="update_by_" property="updateBy" />
+    </resultMap>
+
+    <resultMap id="OrgRelationUserVO" type="com.dstz.org.vo.OrgRelationUserVO">
+        <result column="id_" property="id"/>
+        <result column="type_" property="type"/>
+        <result column="group_id_" property="groupId"/>
+        <result column="group_name_" property="groupName"/>
+        <result column="is_master_" property="isMaster"/>
+        <result column="status_" property="status"/>
+        <result column="user_id_" property="userId"/>
+        <result column="user_account_" property="userAccount"/>
+        <result column="user_fullname_" property="userFullname"/>
+        <result column="role_name_" property="roleName"/>
+        <result column="role_code_" property="roleCode"/>
+        <result column="role_id_" property="roleId"/>
+    </resultMap>
+
+    <resultMap id="OrgPostVO" type="com.dstz.org.vo.OrgPostVO">
+        <result column="role_id_" property="roleId"/>
+        <result column="role_code_" property="roleCode"/>
+        <result column="role_name_" property="roleName"/>
+        <result column="group_id_" property="groupId"/>
+        <result column="group_code_" property="groupCode"/>
+        <result column="group_name_" property="groupName"/>
+    </resultMap>
+
+    <select id="queryGroupUser" resultMap="OrgRelationUserVO">
+        SELECT  relation.*,tgroup.name_ group_name_,tuser.fullname_ user_fullname_,tuser.account_ user_account_,role.name_ role_name_
+        FROM org_relation relation
+        left join org_user tuser on relation.user_id_ = tuser.id_
+        left join org_group tgroup on relation.group_id_ = tgroup.id_
+        left join org_role role on relation.role_id_ = role.id_
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+    <delete id="removeByUserId" parameterType="java.lang.String">
+        DELETE FROM org_relation
+        WHERE
+            user_id_=#{userId}
+    </delete>
+
+    <delete id="removeGroupPostByGroupId" parameterType="java.lang.String">
+        DELETE FROM org_relation
+        WHERE
+            group_id_=#{groupId} and type_ = 'groupRole'
+    </delete>
+
+    <select id="getUserRelation"   parameterType="java.util.Map" resultMap="OrgRelationUserVO">
+        SELECT
+        relation.id_,
+        relation.create_time_,
+        relation.type_  type_,
+        relation.is_master_,
+        relation.status_,
+        tgroup.id_      group_id_,
+        tgroup.name_    group_name_,
+        tuser.id_       user_id_,
+        tuser.fullname_ user_fullname_,
+        tuser.account_  user_account_,
+        role.id_        role_id_,
+        role.name_      role_name_,
+        role.code_      role_code_
+        FROM org_relation relation
+        left join org_user tuser on relation.user_id_ = tuser.id_
+        left join org_group tgroup on relation.group_id_ = tgroup.id_
+        left join org_role role on relation.role_id_ = role.id_
+        WHERE relation.user_id_ = #{userId} and relation.status_ = 1
+        <if test="type != null and type != ''"> and relation.type_ = #{type}</if>
+    </select>
+
+    <select id="getGroupPost"   parameterType="java.util.Map" resultMap="OrgRelationUserVO">
+        SELECT
+            relation.id_,
+            relation.type_  type_,
+            relation.is_master_,
+            relation.status_,
+            tgroup.id_      group_id_,
+            tgroup.name_    group_name_,
+            role.id_        role_id_,
+            role.name_      role_name_,
+            role.code_      role_code_
+        FROM org_relation relation
+                 left join org_group tgroup on relation.group_id_ = tgroup.id_
+                 left join org_role role on relation.role_id_ = role.id_
+        WHERE relation.group_id_ = #{groupId}  and relation.status_ = 1
+          and  relation.type_ = 'groupRole'
+    </select>
+
+
+    <select id="getCountByRelation" parameterType="java.util.Map" resultType="java.lang.Integer">
+        SELECT count(*)  FROM org_relation
+        WHERE 1 = 1
+        <if test="id != null and id != ''"> and id_ != #{id} </if>
+        <if test="userId != null and userId != ''"> and user_id_ = #{userId} </if>
+        <if test="groupId != null and groupId != ''"> and group_id_ = #{groupId} </if>
+        <if test="roleId != null and roleId != ''"> and role_id_ = #{roleId} </if>
+
+    </select>
+
+    <select id="getRelationsByParam"   parameterType="java.util.Map" resultMap="OrgRelationUserVO">
+        SELECT  relation.*,tgroup.name_ group_name_,tuser.fullname_ user_fullname_,tuser.account_ user_account_,role.name_ role_name_
+        FROM org_relation relation
+        left join org_user tuser on relation.user_id_ = tuser.id_
+        left join org_group tgroup on relation.group_id_ = tgroup.id_
+        left join org_role role on relation.role_id_ = role.id_
+        WHERE relation.status_ = 1
+        <if test="userId !=null and userId != ''"> and relation.user_id_ = #{userId} </if>
+        <if test="groupId !=null and groupId != ''"> and relation.group_id_ = #{groupId} </if>
+        <if test="roleId !=null and roleId != ''"> and relation.role_id_ = #{roleId} </if>
+        <if test="relationTypes != null and relationTypes.size>0">
+            and  relation.type_ in
+            <foreach collection="relationTypes" item="type" index="index" open="("  separator="," close=")">
+                <trim prefix="#{" suffix="}">type</trim>
+            </foreach>
+        </if>
+    </select>
+
+
+    <select id="getUserRelationIds"   parameterType="java.util.Map" resultType="java.lang.String">
+        SELECT  relation.id_
+        FROM org_relation relation
+        WHERE   relation.user_id_  in
+            <foreach collection="ids" item="id" index="index" open="("  separator="," close=")">
+                <trim prefix="#{" suffix="}">id</trim>
+            </foreach>
+    </select>
+
+
+    <select id="getUserRole"   parameterType="java.lang.String" resultMap="OrgRelationUserVO">
+        SELECT
+            relation.id_,
+            relation.create_time_,
+            relation.type_  type_,
+            relation.is_master_,
+            relation.status_,
+            tuser.id_       user_id_,
+            tuser.fullname_ user_fullname_,
+            tuser.account_  user_account_,
+            role.id_        role_id_,
+            role.name_      role_name_,
+            role.code_      role_code_
+        FROM org_relation relation
+                 left join org_user tuser on relation.user_id_ = tuser.id_
+                 left join org_role role on relation.role_id_ = role.id_
+        WHERE relation.status_ = 1 and role.enabled_ = 1
+          and relation.user_id_ = #{userId}
+          and  relation.type_ in ('userRole','groupUserRole')
+    </select>
+
+
+    <select id="getPost"   parameterType="java.util.Map" resultMap="OrgRelationUserVO">
+        SELECT
+            relation.id_,
+            relation.create_time_,
+            relation.type_  type_,
+            relation.is_master_,
+            relation.status_,
+            tgroup.id_      group_id_,
+            tgroup.name_    group_name_,
+            role.id_        role_id_,
+            role.name_      role_name_,
+            role.code_      role_code_
+        FROM org_relation relation
+                 left join org_group tgroup on relation.group_id_ = tgroup.id_
+                 left join org_role role on relation.role_id_ = role.id_
+        WHERE relation.id_ = #{groupId}
+          and  relation.type_ = 'groupRole'
+    </select>
+
+    <delete id="removeAllRelation" parameterType="java.lang.String">
+        DELETE FROM org_relation
+        <if test="relationType !=null and relationType != ''"> WHERE type_= #{type} </if>
+    </delete>
+
+    <select id="queryRoleUser" resultMap="OrgRelationUserVO">
+        SELECT
+            relation.id_,
+            relation.create_time_,
+            relation.type_  type_,
+            relation.is_master_,
+            relation.status_,
+            tgroup.id_      group_id_,
+            tgroup.name_    group_name_,
+            tuser.id_       user_id_,
+            tuser.fullname_ user_fullname_,
+            tuser.account_  user_account_,
+            role.id_        role_id_,
+            role.name_      role_name_,
+            role.code_      role_code_
+        FROM org_relation relation
+                 LEFT JOIN org_user tuser ON relation.user_id_ = tuser.id_
+                 LEFT JOIN org_group tgroup ON relation.group_id_ = tgroup.id_
+                 LEFT JOIN org_role role ON relation.role_id_ = role.id_
+        <where>
+             <if test="whereSql!=null">
+                 ${whereSql}
+             </if>
+         </where>
+         <if test="orderBySql!=null">
+             ORDER BY ${orderBySql}
+         </if>
+         <if test="orderBySql==null">
+             ORDER BY id_ DESC
+         </if>
+    </select>
+
+    <select id="getPostsByRoleIdsAndGroupIds" resultMap="OrgPostVO">
+        SELECT
+            trole.id_    role_id_,
+            trole.code_  role_code_,
+            trole.name_  role_name_,
+            tgroup.id_   group_id_,
+            tgroup.code_ group_code_,
+            tgroup.name_ group_name_
+        FROM org_relation relation
+                 INNER JOIN org_role trole ON relation.role_id_ = relation.role_id_
+                 INNER JOIN org_group tgroup ON relation.group_id_ = tgroup.id_
+        WHERE trole.id_ IN <foreach collection="roleIds" open="(" item="roleId" separator="," close=")">#{roleId}</foreach>
+          AND tgroup.id_ IN <foreach collection="groupIds" open="(" item="groupId" separator="," close=")">#{groupId}</foreach>
+          AND relation.type_ = 'groupRole'
+    </select>
+    
+    <select id="queryPosts" resultMap="OrgPostVO">
+        SELECT
+            ogroup.id_    group_id_,
+            ogroup.code_  group_code_,
+            ogroup.name_  group_name_,
+            orole.id_     role_id_,
+            orole.name_   role_name_,
+            orole.code_   role_code_,
+            orealtion.create_time_,
+            orealtion.status_
+        FROM org_relation orealtion
+                 INNER JOIN org_role orole ON orole.id_ = orealtion.role_id_
+                 INNER JOIN org_group ogroup ON ogroup.id_ = orealtion.group_id_
+        WHERE orealtion.type_ = 'groupRole'
+            <if test="@cn.hutool.core.util.StrUtil@isNotBlank(nameFilterSql)">AND ${nameFilterSql}</if>
+            <if test="@cn.hutool.core.util.StrUtil@isNotBlank(whereSql)">AND ${whereSql}</if>
+        <choose>
+            <when test="orderBySql!=null">
+                ORDER BY ${orderBySql}
+            </when>
+            <otherwise>
+                ORDER BY orealtion.create_time_
+            </otherwise>
+        </choose>
+    </select>
+</mapper>

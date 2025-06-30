@@ -1,0 +1,10 @@
+{
+  "name": "abLayoutDesigner",
+  "version": "1.8.0",
+  "description": "Layout Designer",
+  "main": "layout-designer.umd.min.js",
+  "scripts": {},
+  "keywords": [],
+  "author": "",
+  "license": ""
+}

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.org.core.mapper.RoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="Role" type="com.dstz.org.core.entity.Role">
+        <id column="id_" property="id"/>
+        <result column="name_" property="name"/>
+        <result column="code_" property="code"/>
+        <result column="enabled_" property="enabled"/>
+        <result column="level_" property="level"/>
+        <result column="desc_" property="desc"/>
+        <result column="type_code_" property="typeCode"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="create_by_" property="createBy"/>
+        <result column="create_org_id_" property="createOrgId"/>
+        <result column="update_time_" property="updateTime"/>
+        <result column="updater_" property="updater"/>
+        <result column="update_by_" property="updateBy"/>
+    </resultMap>
+
+
+    <resultMap id="ResourceRoleVO" type="com.dstz.org.vo.ResourceRoleVO">
+        <id column="id_" property="id"/>
+        <result column="name_" property="name"/>
+        <result column="code_" property="code"/>
+    </resultMap>
+
+
+    <!-- 这里默认获取岗位职务角色为 该角色的用户  -->
+    <select id="getByUserId" parameterType="java.lang.String" resultMap="Role">
+        SELECT role.*
+        from org_role role
+                 left join org_relation relation on role.id_ = relation.role_id_
+        where enabled_ = 1
+          and relation.status_ = 1
+          and relation.user_id_ = #{userId}
+    </select>
+
+    <select id="query" parameterType="java.util.Map" resultMap="Role">
+        SELECT * FROM org_role
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <where>
+            <if test="defaultWhere!=null">
+                ${defaultWhere}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+
+    <select id="getRoleListByResource" parameterType="java.lang.String" resultMap="ResourceRoleVO">
+        SELECT role.id_, role.name_, role.code_
+        from org_role role
+                 inner join sys_res_role resRole on resRole.ROLE_ID_ = role.id_
+        where resRole.RES_ID_ = #{resourceId}
+    </select>
+
+    <select id="isRoleExist" resultType="java.lang.Integer">
+        SELECT count(1) FROM org_role where code_=#{code}
+        <if test="id!=null">
+            and id_=#{id}
+        </if>
+    </select>
+
+</mapper>

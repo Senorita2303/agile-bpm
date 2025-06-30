@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.cms.core.mapper.CmsHomeMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="CmsHome" type="com.dstz.cms.core.entity.CmsHome">
+        <id column="id_" property="id"/>
+        <result column="name_" property="name"/>
+        <result column="code_" property="code"/>
+        <result column="type_" property="type"/>
+        <result column="type_code_" property="typeCode"/>
+        <result column="width_" property="width"/>
+        <result column="obj_name_" property="objName"/>
+        <result column="remark_" property="remark"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="creator_" property="creator"/>
+        <result column="create_by_" property="createBy"/>
+        <result column="create_org_id_" property="createOrgId"/>
+        <result column="update_time_" property="updateTime"/>
+        <result column="updater_" property="updater"/>
+        <result column="update_by_" property="updateBy"/>
+    </resultMap>
+
+    <select id="listByPermissionAndEnable" resultMap="CmsHome">
+        SELECT
+        c.*
+        FROM
+        cms_home c
+        ${rightsSql}
+        WHERE
+        c.enable_ = 1
+    </select>
+</mapper>

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.cms.core.mapper.CmsDocumentMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="CmsDocument" type="com.dstz.cms.core.entity.CmsDocument"/>
+    <!-- 通用查询映射结果 -->
+    <resultMap id="CmsDocumentVO" type="com.dstz.cms.core.entity.vo.CmsDocumentVO"/>
+
+    <!-- 查询列 -->
+    <sql id="Columns">
+        id_
+        , name_, parent_id_,create_org_name_,type_, files_,file_type_, sn_, file_size_ ,outline_,c.rights_id_,read_num_,borrow_num_,rights_name_,create_by_,creator_,create_time_
+    </sql>
+    <sql id="MyDocColumns">
+        c
+        .
+        id_
+        , c. name_, c. parent_id_, c.create_org_name_, c.files_, c.file_type_, file_size_ , c.outline_, c.rights_id_, c.read_num_, c.borrow_num_, c.rights_name_, c.create_by_, c.creator_, c.create_time_
+    </sql>
+
+    <select id="listJson" parameterType="java.util.Map" resultMap="CmsDocumentVO">
+        SELECT
+        DISTINCT
+        <include refid="MyDocColumns"/>
+        ,
+        COALESCE(b.status_, 'none') status,
+        COALESCE(b.favorite_flag_, 0)  favorite,
+        c.create_by_= #{userId}  my
+        FROM
+        cms_document c
+        -- 展示有权限数据 或 无权限可见
+        <if test="rightsSql!=null and rightsSql!=''">
+            ${rightsSql} or c.visible_ = 1
+        </if>
+
+        left JOIN cms_document_borrow b
+        on c.id_ = b.document_id_
+        and b.user_id_ = #{userId}
+        and b.historical_flag_ = 0
+        where
+        type_ = 'doc'
+        <if test="whereSql!=null and whereSql!=''">
+            and ${whereSql}
+        </if>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+    <select id="myDocListJson" parameterType="java.util.Map" resultMap="CmsDocumentVO">
+        SELECT
+        DISTINCT
+        <include refid="MyDocColumns"/>
+
+        <if test="null == source or '' == source">
+            ,
+            COALESCE(b.status_, 'none')  status,
+            COALESCE(b.favorite_flag_, 0)  favorite,
+            c.create_by_= #{userId}  my
+            from
+            cms_document c
+            LEFT JOIN
+            cms_document_borrow b
+            on b.user_id_ = #{userId}
+            and b.historical_flag_ =0
+            and b.document_id_ = c.id_
+            where((
+            c.type_ = 'doc' and
+            c.create_by_ = #{userId}
+            )
+            or
+            c.id_ = b.document_id_ )
+        </if>
+        <if test="'my' == source">
+            , 1  my,
+            'my'  status
+            from
+            cms_document c
+            where
+            c.create_by_ = #{userId}
+            and
+            c.type_ = 'doc'
+        </if>
+        <if test="'favorite' == source">
+            ,
+            'favorite'  status,
+            COALESCE(b.favorite_flag_, 0)  favorite,
+            c.create_by_= #{userId}  my
+            from
+            cms_document c
+            LEFT JOIN
+            cms_document_borrow b
+            on b.user_id_ = #{userId}
+            and b.historical_flag_ =0
+            and b.favorite_flag_ = 1
+            where c.id_ = b.document_id_
+        </if>
+        <if test="'pass' == source">
+            ,
+            COALESCE(b.status_, 'none')  status,
+            COALESCE(b.favorite_flag_, 0)  favorite,
+            c.create_by_= #{userId}  my
+            from
+            cms_document c
+            LEFT JOIN
+            cms_document_borrow b
+            on b.user_id_ = #{userId}
+            and b.historical_flag_ =0
+            and b.status_ = #{source}
+            where c.id_ = b.document_id_
+        </if>
+
+        <if test="whereSql!=null and whereSql!=''">
+            and ${whereSql}
+        </if>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+    <select id="fieldListJson" resultMap="CmsDocument">
+        SELECT DISTINCT
+        <include refid="Columns"/>
+        FROM
+        cms_document c
+        <if test="rightsSql!=null and rightsSql!=''">
+            ${rightsSql} or c.visible_ = 1
+        </if>
+        where
+        type_ = 'field'
+        <if test="whereSql!=null and whereSql!=''">
+            and ${whereSql}
+        </if>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+    <select id="listByPermission" resultType="java.lang.String">
+        SELECT
+        rights_target_
+        from
+        sys_authorization
+        where
+        rights_object_ = 'DOCUMENT'
+        AND rights_permission_code_ IN
+        <foreach collection="codeList" item="r" separator="," open="(" close=")">#{r,jdbcType=VARCHAR}</foreach>
+        AND rights_target_ IN
+        <foreach collection="idList" item="n" separator="," open="(" close=")">#{n,jdbcType=VARCHAR}</foreach>
+    </select>
+
+</mapper>

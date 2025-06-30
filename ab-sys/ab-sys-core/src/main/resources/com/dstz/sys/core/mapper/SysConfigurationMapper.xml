@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysConfigurationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysConfiguration" type="com.dstz.sys.core.entity.SysConfiguration">
+        <id column="id_" property="id" />
+        <result column="code_" property="code" />
+        <result column="env_" property="env" />
+        <result column="json_" property="json" />
+        <result column="is_enable_" property="isEnable" />
+        <result column="is_encrypt_" property="isEncrypt" />
+        <result column="name_" property="name" />
+        <result column="desc_" property="desc" />
+        <result column="create_by_" property="createBy" />
+        <result column="create_time_" property="createTime" />
+        <result column="update_by_" property="updateBy" />
+        <result column="update_time_" property="updateTime" />
+    </resultMap>
+
+</mapper>

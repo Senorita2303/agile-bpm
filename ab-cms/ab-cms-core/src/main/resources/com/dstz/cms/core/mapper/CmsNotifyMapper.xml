@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.cms.core.mapper.CmsNotifyMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="CmsNotifyVO" type="com.dstz.cms.core.entity.vo.CmsNotifyListVO">
+        <id column="id_" property="id"/>
+        <result column="title_" property="title"/>
+        <result column="type_id_" property="typeId"/>
+        <result column="comments_num_" property="commentsNum"/>
+        <result column="visit_num_" property="visitNum"/>
+        <result column="isRead" property="isRead"/>
+        <result column="create_time_" property="createTime"/>
+    </resultMap>
+
+    <!-- 查询列 -->
+    <sql id="cmsNotifyVOColumns">
+        distinct n.id_ , n.title_,  n.type_id_,  n.release_time_, n.comments_num_, n.visit_num_, m.status_  isRead
+    </sql>
+
+        <select id="getNotifyPage"  parameterType="java.util.Map"  resultMap="CmsNotifyVO">
+            SELECT
+            <include refid="cmsNotifyVOColumns"></include>
+            FROM cms_notify as n
+            LEFT JOIN
+            cms_inner_msg as m
+            on m.biz_id_ = n.id_
+            and m.status_ != 2
+            where
+            n.status_ = 1 and m.user_id_ = #{userId}
+            <if test="whereSql!=null and whereSql!=''"  >
+                 and ${whereSql}
+            </if>
+            order by m.status_, m.create_time_
+        </select>
+</mapper>
