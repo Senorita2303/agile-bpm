@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysAuditLogMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="AuditLog" type="com.dstz.sys.core.entity.SysAuditLog">
+        <id column="id_" property="id" />
+        <result column="log_medata_id_" property="logMedataId" />
+        <result column="account_" property="account" />
+        <result column="operator_" property="operator" />
+        <result column="operator_group_" property="operatorGroup" />
+        <result column="ip_" property="ip" />
+        <result column="ip_address_" property="ipAddress" />
+        <result column="trace_id_" property="traceId" />
+        <result column="biz_id_" property="bizId" />
+        <result column="description_" property="description" />
+        <result column="data_" property="data" />
+        <result column="create_time_" property="createTime" />
+        <result column="create_by_" property="createBy" />
+        <result column="create_org_id_" property="createOrgId" />
+        <result column="creator_" property="creator" />
+        <result column="signature_" property="signature" />
+    </resultMap>
+
+    <select id="countByLogMetadataId" parameterType="string" resultType="int">
+        SELECT COUNT(*)
+        FROM sys_audit_log
+        WHERE log_medata_id_ = #{logMetadataId}
+    </select>
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="AuditLogVO" type="com.dstz.sys.rest.model.vo.SysAuditLogVO">
+        <id column="id_" property="id" />
+        <result column="log_medata_id_" property="logMedataId" />
+        <result column="account_" property="account" />
+        <result column="operator_" property="operator" />
+        <result column="operator_group_" property="operatorGroup" />
+        <result column="ip_" property="ip" />
+        <result column="ip_address_" property="ipAddress" />
+        <result column="trace_id_" property="traceId" />
+        <result column="biz_id_" property="bizId" />
+        <result column="description_" property="description" />
+        <result column="data_" property="data" />
+        <result column="create_time_" property="createTime" />
+        <result column="create_by_" property="createBy" />
+        <result column="create_org_id_" property="createOrgId" />
+        <result column="creator_" property="creator" />
+        <result column="signature_" property="signature" />
+        <result column="action_" property="action" />
+    </resultMap>
+    <select id="queryList" parameterType="java.util.Map" resultMap="AuditLogVO">
+        SELECT a.id_, a.account_,a.operator_, a.operator_group_,a.ip_,a.ip_address_ , a.trace_id_,a.description_,a.create_time_, a.signature_, b.action_  action_
+        FROM sys_audit_log   a left JOIN  sys_audit_log_metadata  b on a.log_medata_id_ = b.id_
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY a.id_ DESC
+        </if>
+    </select>
+
+</mapper>

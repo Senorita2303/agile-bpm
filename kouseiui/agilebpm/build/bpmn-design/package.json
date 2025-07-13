@@ -1,0 +1,12 @@
+{
+  "name": "abDesigner",
+  "version": "1.8.0",
+  "description": "Process Designer",
+  "main": "bpmn-designer.umd.min.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": ""
+}

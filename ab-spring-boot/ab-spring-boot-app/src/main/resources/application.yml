@@ -1,0 +1,169 @@
+spring:
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/kousei_db?useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai
+    username: root
+    password: Senorita1610
+  session: 
+    store-type: none
+    # Session duration (unit: seconds)
+    timeout: 1800
+    # Session storage type none, redis, please use Redis in distributed mode
+    redis:
+      namespace: ab:session
+  redis:
+    host: localhost
+    port: 6379
+    database: 5
+    password:
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+  activiti:
+    database-schema-update: none
+  servlet:
+    multipart:
+      max-request-size: "64MB"
+      max-file-size: "64MB"
+logging:
+  level:
+    root: INFO
+    com:
+      dstz: DEBUG
+      baomidou: DEBUG
+    org:
+      springframework:
+        jdbc:
+          core: DEBUG
+        data:
+          redis: ERROR
+      mongodb:
+        driver: INFO
+    io:
+      lettuce: ERROR
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+ab:
+  cache:
+    # Cache type memory: memory
+    type: memory
+    # Cache area, define the expiration time of each cache area
+    region:
+      # Dictionary
+      DICT: PT12H
+      # System properties
+      SYSPROPETIES: PT12H
+      # Process definition
+      BPM_PROCESS_DEF: PT12H
+      # Process definition
+      BPM_ACT_PROCESS_DEF: PT12H
+      # Resource related
+      SYS_RESOURCE: PT12H
+      # Login related
+      LOGIN_TOKEN: PT1H
+      # Operation log related
+      AUDIT_LOG_META: PT12H
+      # Message related AccessToken expired KEY 1.5h expired, self-expired in advance to re-acquire
+      MSG_REGION:  PT60M
+      # Third-party login
+      THIRD_TOKEN: PT115M
+      # Password verification
+      PWD_TOKEN: PT1H
+      # Business Objects
+      BIZ_OBJECT: PT12H
+      # Data source
+      SYS_DATA_SOURCE: PT12H
+      # oauth
+      OAUTH_REGION: PT12H
+      # Custom list
+      BIZ_CHART: PT1000H
+      # Customize dialog box
+      BIZ_CUST_DIALOG: PT12H
+      # Data permissions
+      DATA_PRIVILEGE: PT12H
+      # System applications
+      SYS_APPLICATION: PT30M
+      # System session attributes
+      SYS_SESSION_ATTRIBUTE: PT15M
+    # Authentication
+  security:
+    ## Ignore authentication URL
+    auth-ingores:
+      - /login.*
+      - /error
+      - /logout
+      - /index.html
+      - /favicon.ico
+      - /login/dstz
+      - login/*
+      - /tenant/resource/*
+      - /ab-org/auth/login*
+      - /ab-org/auth/login/*
+      - /ab-org/auth/getToken
+      - /ab-org/auth/refreshToken
+      - /ab-bpm/sys/licenceInfo
+      - /ab-bpm/sys/sysFile/view/*
+      - /ab-org/auth/quickLogin*
+      - /ab-bpm/sys/sysConfiguration/getConfByCode/qywx
+      - /ab-bpm/sys/sysFile/download*
+      - /ab-bpm/sys/sysFile/update
+
+    ## Ignore URLs for hotlink protection
+    csrf-ingores:
+      - 127.0.0.1
+      - localhost
+
+    # Maximum number of sessions -1: indicates that the session is not subject to any restrictions 0: except for the last login session of the logged-in user, all other sessions are invalid Greater than 0: limit the maximum number of sessions for the user
+    maximum-sessions: -1
+
+  oauth:
+    ## Token storage solution InMemory: local memory, redis
+    token-store-type: InMemory
+    ## Token verification key
+    login-token-signing-key: ab22
+
+  simple-mq:
+    ## mq queue configuration: redis: use Redis as queue; synchronous: synchronization, no queue; jms: activemq as queue discard: discard mode, call JmsProducer without any processing
+    ## http://doc.a5.tongzhouyun.com/guide/system-setting/mqMessage.html
+    message-queue-type: synchronous
+  # Token configuration for relay when calling forwarding in Rest interface
+  rest-client-info-transform:
+    headers:
+      - name: Authorization
+  # Enable scheduled tasks
+  schedule:
+    enable: false
+
+# j2cache cache configuration
+j2cache:
+  level2:
+    # Second level cache enabled
+    cache-open: false
+  broadcast:
+    # Enable broadcast notifications
+    open: ${j2cache.level2.cache-open}
+xxljob:
+  # Scheduling center deployment and address [optional]: If there are multiple addresses for the scheduling center cluster deployment, separate them with commas. The executor will use this address for "executor heartbeat registration" and "task result callback"; if it is empty, automatic registration will be turned off;
+  admin-addresses: http://192.168.1.5:8080/xxl-job-admin
+  # Actuator communication TOKEN [optional]: Enabled when not empty;
+  # access-token:
+  #  Executor AppName [optional]: The basis for executor heartbeat registration grouping; if empty, automatic registration will be disabled
+  app-name: agile-bpm
+  # Executor registration [optional]: This configuration is used as the registration address first. If it is empty, the embedded service "IP:PORT" is used as the registration address. This allows more flexible support for container-type executors with dynamic IP and dynamic mapping ports.
+  #  executor-address:
+  # Executor IP [optional]: The default is empty, indicating that the IP is automatically obtained. When there are multiple network cards, you can manually set a specified IP. This IP will not be bound to the host and is only used for communication; the address information is used for "executor registration" and "dispatch center request and trigger task";
+  #  executor-ip:
+  # Executor port number [optional]: automatically obtained if less than or equal to 0; the default port is 9999. When multiple executors are deployed on a single machine, please be sure to configure different executor ports;
+  #  executor-port:
+  # Executor operation log file storage disk path [optional]: You need to have read and write permissions for this path; if it is empty, the default path will be used;
+  executor-log-path: ${java.io.tmpdir}logs/xxl-job/jobhandler
+  # Executor log file storage days [optional]: expired logs are automatically cleaned up, and the limit value is greater than or equal to 3; otherwise, if -1, the automatic cleanup function is turned off;
+#  executor-log-retention-days: 7
+
+## Upload configuration: db stores the database; ordinary stores the local disk, and the uploader.ordinary.path storage directory needs to be configured. minio requires ab:minio related configuration. Please see the IUploader implementation class for details
+uploader:
+  default: db

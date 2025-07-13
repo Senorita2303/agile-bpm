@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysAuthorizationMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysAuthorization" type="com.dstz.sys.core.entity.SysAuthorization">
+        <id column="rights_id_" property="rightsId"/>
+        <result column="rights_object_" property="rightsObject"/>
+        <result column="rights_target_" property="rightsTarget"/>
+        <result column="rights_type_" property="rightsType"/>
+        <result column="rights_identity_" property="rightsIdentity"/>
+        <result column="rights_identity_name_" property="rightsIdentityName"/>
+        <result column="rights_permission_code_" property="rightsPermissionCode"/>
+        <result column="rights_create_time_" property="rightsCreateTime"/>
+        <result column="rights_create_by_" property="rightsCreateBy"/>
+    </resultMap>
+
+    <select id="getByTarget" parameterType="java.util.Map" resultMap="SysAuthorization">
+        SELECT *
+        FROM sys_authorization
+        WHERE rights_target_ = #{rightsTarget}
+          and rights_object_ = #{rightsObject}
+    </select>
+
+    <delete id="deleteByTarget" parameterType="java.util.Map">
+        DELETE
+        FROM sys_authorization
+        WHERE rights_target_ = #{rightsTarget}
+          and rights_object_ = #{rightsObject}
+    </delete>
+</mapper>

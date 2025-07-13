@@ -1,0 +1,1 @@
+AgileBPM workflow low-code rapid development platform, a new version based on JDK17, Activiti7, Vue3, TS, Vite, ElementPlus, a new technology stack, a new experience. I will continue to update low-code functions such as OA personnel and asset management, so stay tuned.

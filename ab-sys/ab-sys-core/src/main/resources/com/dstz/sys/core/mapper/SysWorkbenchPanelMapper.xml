@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysWorkbenchPanelMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysWorkbenchPanel" type="com.dstz.sys.core.entity.SysWorkbenchPanel">
+        <id column="id_" property="id"/>
+        <result column="alias_" property="alias"/>
+        <result column="name_" property="name"/>
+        <result column="type_" property="type"/>
+        <result column="desc_" property="desc"/>
+        <result column="data_type_" property="dataType"/>
+        <result column="data_source_" property="dataSource"/>
+        <result column="auto_refresh_" property="autoRefresh"/>
+        <result column="width_" property="width"/>
+        <result column="height_" property="height"/>
+        <result column="display_content_" property="displayContent"/>
+        <result column="more_url_" property="moreUrl"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="create_by_" property="createBy"/>
+        <result column="update_time_" property="updateTime"/>
+        <result column="update_by_" property="updateBy"/>
+        <result column="delete_flag_" property="deleteFlag"/>
+    </resultMap>
+
+    <select id="getBylayoutKey" parameterType="java.lang.String" resultMap="SysWorkbenchPanel">
+        select DISTINCT * from (SELECT l.sn_,
+        p.id_,p.alias_,p.name_,p.type_,p.desc_,p.data_type_,p.data_source_,p.auto_refresh_,p.width_,p.height_,
+        <if test='dbType=="oracle"'>to_char(p.display_content_) display_content_,</if>
+        <if test='dbType!="oracle"'>p.display_content_,</if>
+        p.more_url_,l.cust_width_,l.cust_height_,l.id_ as custLayOutId
+        FROM sys_workbench_panel p inner join sys_workbench_layout l on p.id_ = l.panel_id_
+        WHERE l.user_id_ = #{layoutKey}
+        )t order by sn_
+    </select>
+
+    <select id="getByUser" parameterType="java.lang.String" resultMap="SysWorkbenchPanel">
+        select DISTINCT * from ( SELECT l.sn_,
+        p.id_,p.alias_,p.name_,p.type_,p.desc_,p.data_type_,p.data_source_,p.auto_refresh_,p.width_,p.height_,
+        <if test='dbType=="oracle"'>to_char(p.display_content_) display_content_,</if>
+        <if test='dbType!="oracle"'>p.display_content_,</if>
+        p.more_url_,l.cust_width_,l.cust_height_,l.id_ as custLayOutId
+        FROM sys_workbench_panel p inner join sys_workbench_layout l on p.id_ = l.panel_id_
+        ${rightsSql}
+        where l.user_id_ = #{userId} )t order by sn_
+    </select>
+
+    <select id="getUsablePanelsByUserRight" parameterType="java.util.Map" resultMap="SysWorkbenchPanel">
+        SELECT DISTINCT panel.* FROM sys_workbench_panel panel ${rightsSql}
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+    </select>
+
+</mapper>

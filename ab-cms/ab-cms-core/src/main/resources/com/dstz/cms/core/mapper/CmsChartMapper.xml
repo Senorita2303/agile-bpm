@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.cms.core.mapper.CmsChartMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="CmsChart" type="com.dstz.cms.core.entity.CmsChart"/>
+
+    <select id="getByHomeCode" resultMap="CmsChart">
+        SELECT c.*
+        FROM cms_chart as c
+                 INNER JOIN cms_home as h
+                            on h.code_ = #{homeCode}
+                                and c.home_id_ = h.id_
+        limit 1
+    </select>
+
+</mapper>

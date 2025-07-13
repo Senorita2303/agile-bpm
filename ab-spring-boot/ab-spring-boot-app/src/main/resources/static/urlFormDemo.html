@@ -1,0 +1,84 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <script src="https://unpkg.com/vue@next"></script>
+    <!-- import CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+    <!-- import JavaScript -->
+    <script src="https://unpkg.com/element-plus"></script>
+    <title>URL 表单 demo</title>
+  </head>
+  <body>
+    <div id="app">
+      <el-form :model="form" label-width="120px">
+	    <el-form-item label="名字">
+	      <el-input v-model="form.name" />
+	    </el-form-item>
+	    <el-form-item label="地区">
+	      <el-select v-model="form.region" placeholder="please select your zone">
+	        <el-option label="深圳" value="深圳" />
+	        <el-option label="北京" value="北京" />
+	      </el-select>
+	    </el-form-item>
+  	 </el-form>
+    </div>
+    <script>
+      const App = {
+        data() {
+          return {
+            form :{},
+          };
+        },
+        mounted : function () {
+        	// 【一】 向 BPM 页面 通知 我是存在事件交互的，如果不像父页面通知，父页面不会回调 获取数据校验表单
+        	window.parent.postMessage ({type : 'callback' ,name : 'subIframeCallback',}, "*" );
+        	
+        	//【二】 监听主页面的获取数据的"getDataReady"事件，返回页面JSON，以及表单校验是否通过
+        	window.onmessage = (e)=> {
+        		var data = e.data || {};
+        	    if( data.type != 'getDataReady'){
+        	        return;
+        	    }
+				
+        	    
+        	    // TODO 自我校验当前表单（比如通过formRef 异步校验，js逻辑校验等），并返回结果
+        	    let valid = true;
+        	    if(!this.form.name){
+        	    	let errorMsg = '名字不能为空';
+        	    	valid = false;
+        	    	// 根据需要进行表单错误提示
+        	    	// 目前只有启动，保存，同意等关键动作需要校验表单，其他如驳回转办等不校验表单的，如果不校验表单完整性的逻辑时，可以不用弹出对话框
+        	    	if(data.isValid){
+	        	    	alert(" 业务表单校验不通过，名字不能为空！")
+        	    	}
+        	    }
+
+        	    // TODO 获取数据的逻辑
+        	    var formData = {};
+        	    
+
+        	    // 【三】发送数据报送事件
+        	    window.parent.postMessage ( {
+        	        type : 'getData' ,
+        	        url : document.location.href ,
+        	        // 校验结果 true / false
+        	        valid : valid,
+        	        // 校验信息，可为空
+        	        errorMsg : errorMsg,
+        	        // 表单数据
+        	        data : formData
+        	    }, data.url );
+        	}
+        },
+        methods: {
+            onSubmit() {
+            }
+        }
+      };
+      const app = Vue.createApp(App);
+      app.use(ElementPlus);
+      app.mount("#app");
+    </script>
+  </body>
+</html>

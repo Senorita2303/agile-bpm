@@ -1,0 +1,98 @@
+/**
+*  ab global style, for common parts of css definition, please describe the css scenario usage in detail for each css.
+*/
+
+// Text type buttons are narrower
+// When text type buttons are placed side by side, cancel padding
+.el-table-fixed-column--right {
+  .el-button.is-text {
+    padding: 8px 12px;
+  }
+
+  .el-button.is-text+.el-button {
+    margin-left: 0px !important;
+  }
+}
+
+th.el-table-fixed-column--right {
+  background: #f5f7fa !important;
+}
+
+th.el-table-fixed-column--left {
+  background: #f5f7fa !important;
+}
+
+
+// The default style of ab-table hover on the list page follows the theme
+tr.hover-row>td.el-table__cell {
+  background-color: var(--el-color-primary-light-9) !important;
+  ;
+}
+
+// Drag the element and let the mouse appear to be dragging
+.move-btn {
+  cursor: move;
+}
+
+// The last element in the flex layout, aligned to the right
+.flex-right {
+  margin-left: auto
+}
+
+
+// The maximum text limit, if exceeded, display ...
+.maxlength-120,
+.maxlength-200,
+.maxlength-300,
+.maxlength-500 {
+  margin-bottom: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.maxlength-120 {
+  max-width: 120px;
+}
+
+.maxlength-200 {
+  max-width: 200px;
+}
+
+.maxlength-300 {
+  max-width: 300px;
+}
+
+.maxlength-500 {
+  max-width: 500px;
+}
+
+
+
+// TODOs for dialog-specific styles are migrated to dialog components
+.ab-dialog>.el-dialog__header {
+  padding: 14px 16px;
+  line-height: 1;
+  border-bottom: 1px solid #e8eaec;
+}
+
+.ab-dialog>.el-dialog__title {
+  display: inline-block;
+  width: 100%;
+  height: 20px;
+  overflow: hidden;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 20px;
+  color: #17233d;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.dialog_body_nopadding>.el-dialog__body {
+  padding: 0px !important
+}
+
+.dialog_no_header>.el-dialog__header {
+  display: none;
+}

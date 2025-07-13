@@ -1,0 +1,723 @@
+/* Global */
+@import './variables.scss';
+
+#app,
+body,
+html {
+    position: relative;
+    box-sizing: border-box;
+    height: 100vh;
+    padding: 0;
+    // overflow: hidden;
+    font-family: 'PingFang SC', Arial, 'Microsoft YaHei', sans-serif;
+    font-size: $base-font-size-default;
+    color: var(--el-color-black);
+    background: $base-color-background;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+    color: $base-color-primary !important;
+    text-decoration: none;
+}
+
+a:hover,
+a:focus {
+    color: #000;
+    text-decoration: none;
+}
+
+a:link {
+    text-decoration: none;
+}
+
+a:-webkit-any-link {
+    text-decoration: none;
+}
+
+a,
+button,
+input,
+textarea {
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    box-sizing: border-box;
+    outline: none !important;
+    -webkit-appearance: none;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    outline: none;
+}
+
+b,
+strong {
+    font-weight: bolder;
+}
+
+/* Large layout style */
+
+.aminui {
+    display: flex;
+    flex-flow: column;
+}
+
+.aminui-wrapper {
+
+    display: flex;
+    flex: 1;
+    overflow: auto;
+    height: 100vh;
+}
+
+
+/* Global scrollbar style */
+
+.scrollable {
+    -webkit-overflow-scrolling: touch;
+}
+
+::-webkit-scrollbar {
+    width: 14px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: mix($base-color-white, $base-menu-background, 90%);
+    border: 3px solid transparent;
+    border-radius: 7px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: mix($base-color-white, $base-menu-background, 80%);
+}
+
+
+::-webkit-scrollbar-track {
+    background-color: rgba(50, 50, 50, 0.1);
+}
+
+::-webkit-scrollbar-track:hover {
+    background-color: rgba(50, 50, 50, 0.2);
+}
+
+
+
+/* Layout settings */
+
+.layout-setting {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border-radius: 3px 0 0 3px;
+    bottom: 200px;
+    right: 0px;
+    z-index: 100;
+    background: #409EFF;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}
+
+.layout-setting i {
+    font-size: 18px;
+    color: #fff;
+}
+
+
+/* Head */
+
+.adminui-header {
+    height: 58px;
+    background: #222b45;
+    color: #fff;
+    display: flex;
+    justify-content: space-between;
+}
+
+.adminui-header-left {
+    display: flex;
+    align-items: center;
+    padding-left: 20px;
+}
+
+.adminui-header-right {
+    display: flex;
+    align-items: center;
+}
+
+.adminui-header .logo-bar {
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+}
+
+.adminui-header .logo-bar .logo {
+    margin-right: 10px;
+    width: 35px;
+    height: 35px;
+}
+
+.adminui-header .nav {
+    display: flex;
+    height: 100%;
+    margin-left: 40px;
+}
+
+.adminui-header .nav li {
+    padding: 0 10px;
+    margin: 0 10px 0 0;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    list-style: none;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.adminui-header .nav li i {
+    margin-right: 5px;
+}
+
+.adminui-header .nav li:hover {
+    color: #fff;
+}
+
+.adminui-header .nav li.active {
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+}
+
+.adminui-header .user-bar .panel-item:hover {
+    background: rgba(255, 255, 255, 0.1) !important;
+}
+
+.adminui-header .user-bar .user label {
+    color: #fff;
+}
+
+
+/* Left menu */
+
+.aminui-side-split {
+    width: 90px;
+    flex-shrink: 0;
+    background: #222b45;
+    display: flex;
+    flex-flow: column;
+}
+
+.aminui-side-split-top {
+    height: 49px;
+}
+
+.aminui-side-split-top a {
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.aminui-side-split-top .logo {
+    height: 30px;
+    vertical-align: bottom;
+}
+
+.adminui-side-split-scroll {
+    overflow: auto;
+    overflow-x: hidden;
+    height: 100%;
+    flex: 1;
+}
+
+.aminui-side-split li {
+    cursor: pointer;
+    width: 90px;
+    height: 65px;
+    color: #fff;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.aminui-side-split li i {
+    font-size: 18px;
+}
+
+.aminui-side-split li p {
+    margin-top: 5px;
+}
+
+.aminui-side-split li:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.aminui-side-split li.active {
+    background: #409EFF;
+}
+
+.adminui-side-split-scroll::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.4);
+    border-radius: 5px;
+}
+
+.adminui-side-split-scroll::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+.adminui-side-split-scroll::-webkit-scrollbar-track {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.adminui-side-split-scroll::-webkit-scrollbar-track:hover {
+    background-color: rgba(255, 255, 255, 0);
+}
+
+.aminui-side {
+    display: flex;
+    flex-flow: column;
+    flex-shrink: 0;
+    width: 250px;
+    background: #fff;
+    box-shadow: 2px 0 8px 0 rgba(29, 35, 41, .05);
+    border-right: 1px solid #e6e6e6;
+    transition: width 0.3s;
+}
+
+.adminui-side-top {
+    border-bottom: 1px solid #ebeef5;
+    height: 50px;
+    line-height: 50px;
+}
+
+.adminui-side-top h2 {
+    padding: 0 20px;
+    font-size: 17px;
+    color: #3c4a54;
+}
+
+.adminui-side-scroll {
+    overflow: auto;
+    overflow-x: hidden;
+    flex: 1;
+}
+
+.adminui-side-bottom {
+    border-top: 1px solid #ebeef5;
+    height: 51px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adminui-side-bottom i {
+    font-size: 16px;
+}
+
+.adminui-side-bottom:hover {
+    color: var(--el-color-primary);
+}
+
+.aminui-side.isCollapse {
+    width: 65px;
+}
+
+.el-menu .menu-tag {
+    position: absolute;
+    height: 18px;
+    line-height: 18px;
+    background: var(--el-color-danger);
+    font-size: 12px;
+    color: #fff;
+    right: 20px;
+    border-radius: 18px;
+    padding: 0 6px;
+}
+
+.el-menu .el-sub-menu__title .menu-tag {
+    right: 40px;
+}
+
+.el-menu--horizontal>li .menu-tag {
+    display: none;
+}
+
+
+/* Right side content */
+
+.aminui-body {
+    flex: 1;
+    display: flex;
+    flex-flow: column;
+    overflow: hidden;
+}
+
+.adminui-topbar {
+    height: 50px;
+    border-bottom: 1px solid #ebeef5;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0, 21, 41, .08);
+    display: flex;
+    justify-content: space-between;
+}
+
+.adminui-topbar .left-panel {
+    display: flex;
+    align-items: center;
+}
+
+.adminui-topbar .right-panel {
+    display: flex;
+    align-items: center;
+}
+
+.right-panel-search {
+    display: flex;
+    align-items: center;
+}
+
+.right-panel-search>*+* {
+    margin-left: 10px;
+}
+
+.adminui-tags {
+    height: 35px;
+    background: #fff;
+    border-bottom: 1px solid #e6e6e6;
+}
+
+.adminui-tags ul {
+    display: flex;
+    overflow: hidden;
+}
+
+.adminui-tags li {
+    cursor: pointer;
+    display: inline-block;
+    float: left;
+    height: 34px;
+    line-height: 34px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.adminui-tags li::after {
+    content: " ";
+    width: 1px;
+    height: 100%;
+    position: absolute;
+    right: 0px;
+    background-image: linear-gradient(#fff, #e6e6e6);
+}
+
+.adminui-tags li a {
+    display: inline-block;
+    padding: 0 10px;
+    width: 100%;
+    height: 100%;
+    color: #999;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+}
+
+.adminui-tags li i {
+    margin-left: 10px;
+    border-radius: 3px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.adminui-tags li i:hover {
+    background: rgba(0, 0, 0, .2);
+    color: #fff;
+}
+
+.adminui-tags li:hover {
+    background: #ecf5ff;
+}
+
+.adminui-tags li.active {
+    background: #409EFF;
+}
+
+.adminui-tags li.active a {
+    color: #fff;
+}
+
+.adminui-tags li.sortable-ghost {
+    opacity: 0;
+}
+
+//container
+.adminui-main {
+    padding: 20px;
+    overflow: auto;
+
+    >[class*='-container'] {
+        min-height: $base-keep-alive-height;
+        padding: $base-padding;
+        background: $base-color-white;
+        transition: $base-transition;
+    }
+
+    section {
+        background: $base-color-white;
+        transition: $base-transition;
+    }
+
+    .common-layout {
+        background: $base-color-white;
+    }
+
+}
+
+/* el-table table */
+.el-table {
+    th {
+        background: #f5f7fa !important;
+    }
+
+    td,
+    th {
+        position: relative;
+        box-sizing: border-box;
+
+        .cell {
+            font-size: $base-font-size-default;
+            font-weight: normal;
+            color: #606266;
+
+            .el-image {
+                width: 50px;
+                height: 50px;
+                border-radius: $base-border-radius;
+            }
+        }
+    }
+}
+
+/* el-pagination pagination */
+.el-pagination {
+    justify-content: center;
+    margin: $base-margin 0 0 0;
+    font-weight: normal;
+    color: $base-color-black;
+}
+
+.layout-container-demo {
+    height: 500px;
+
+    .el-form {
+        margin-top: 20px;
+    }
+}
+
+.layout-container-demo .el-header {
+    position: relative;
+    height: 42px;
+    color: var(--el-text-color-primary);
+    background-color: #fff;
+}
+
+.layout-container-demo .el-main {
+    padding: 0px;
+}
+
+.dividermar {
+    margin-bottom: 0px !important;
+}
+
+// Related styles of the classification tree on the left
+.left-tree {
+    /* padding-left: 10px; */
+    --el-aside-width: 200px;
+    overflow-x: auto !important;
+    background: white;
+    border-right: 10px solid #f5f7f9 !important;
+}
+
+.left-tree.noscrollx {
+    overflow-x: hidden !important;
+}
+
+@media screen and (max-width: 1690px) {
+    .left-tree {
+        display: none;
+    }
+
+    .left-tree {
+        margin-left: 0px !important;
+    }
+}
+
+// The right side of the data dictionary is related to the style
+.right-tree {
+    /* padding-left: 10px; */
+    overflow-x: auto !important;
+    background: white;
+    border-left: 10px solid #f5f7f9;
+}
+
+.right-tree.noscrollx {
+    overflow-x: hidden !important;
+}
+
+.alignCenterDialog {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    display: flex;
+    flex-direction: column;
+    margin: 0 !important;
+    transform: translate(-50%, -50%);
+
+    .el-dialog__body {
+        flex: 1;
+    }
+
+}
+
+$base: '.menu-management';
+
+#{$base}-container {
+    padding: 0 !important;
+    background: $base-color-background !important;
+}
+
+/* el-divider spacer */
+.el-divider.el-divider--horizontal {
+    margin: 8px 0 $base-margin + 8px 0;
+
+    .el-divider__text {
+        display: -webkit-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+    }
+}
+
+/* Maximize the page */
+
+.aminui.main-maximize {
+    .main-maximize-exit {
+        display: block;
+    }
+
+    .aminui-side-split,
+    .aminui-side,
+    .adminui-header,
+    .adminui-topbar,
+    .adminui-tags {
+        display: none;
+    }
+}
+
+.main-maximize-exit {
+    display: none;
+    position: fixed;
+    z-index: 3000;
+    top: -20px;
+    left: 50%;
+    margin-left: -20px;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+.main-maximize-exit i {
+    font-size: 14px;
+    margin-top: 22px;
+    color: #fff;
+}
+
+.main-maximize-exit:hover {
+    background: rgba(0, 0, 0, 0.4);
+}
+
+
+/* Fixed width page */
+
+.sc-page {
+    width: 1230px;
+    margin: 0 auto;
+}
+
+
+// Subtable title part
+span.title {
+    margin-right: 20px;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 26px;
+    color: #3892f2;
+}
+
+.ab-table {
+    width: 100%;
+    font-size: 12px;
+    background-color: #fff;
+}
+
+.ab-table thead {
+    height: 32px;
+}
+
+.ab-table tr {
+    height: 25px;
+}
+
+.ab-table table>thead>tr {
+    background-color: #eee;
+}
+
+.ab-table thead th {
+    width: auto;
+    min-width: 90px;
+    height: 32px;
+    font-weight: 700;
+    text-align: center;
+    background-color: #f3f3f3;
+}
+
+.ab-table th {
+    width: 15%;
+    height: 32px;
+    padding: 0 7px 0 7px;
+    font-weight: 400;
+    color: #7a7a83;
+    text-align: left;
+    background-color: #fff;
+    border: 0 solid #fff;
+}
+
+.ab-table td {
+    padding: 0;
+    font-weight: 400;
+    text-align: center;
+    border: 0 solid #fff;
+}
+
+.ab-table-sn {
+    width: 50px !important;
+    min-width: 0px !important;
+}

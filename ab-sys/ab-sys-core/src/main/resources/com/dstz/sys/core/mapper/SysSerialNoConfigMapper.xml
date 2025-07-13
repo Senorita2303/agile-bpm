@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysSerialNoConfigMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysSerialNoConfig" type="com.dstz.sys.core.entity.SysSerialNoConfig">
+        <id column="id_" property="id" />
+        <result column="name_" property="name" />
+        <result column="code_" property="code" />
+        <result column="rule_" property="rule" />
+        <result column="revive_rule_" property="reviveRule" />
+        <result column="no_length_" property="noLength" />
+        <result column="step_length_" property="stepLength" />
+        <result column="initial_value_" property="initialValue" />
+        <result column="param_script_" property="paramScript" />
+        <result column="create_time_" property="createTime" />
+        <result column="create_by_" property="createBy" />
+        <result column="create_org_id_" property="createOrgId" />
+        <result column="update_time_" property="updateTime" />
+        <result column="updater_" property="updater" />
+        <result column="update_by_" property="updateBy" />
+    </resultMap>
+
+</mapper>

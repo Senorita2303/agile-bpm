@@ -1,0 +1,118 @@
+.taohong-title {
+  width:100%;
+  padding-bottom: 25px;
+  margin:auto ;
+  margin-bottom: 15px;
+  font-size: 25px;
+  font-weight: 900;
+  color: #C37471;
+  text-align: center;
+  border-bottom: 2px solid #C37471;
+}
+.taohong-table{
+  width:100%;
+  margin:auto ;
+  margin-bottom: 30px !important;
+  border-collapse:collapse;
+  border:1px solid #C37471;
+}
+.taohong-table tr{
+  height: 30px !important;
+  border:1px solid #C37471;
+}
+.taohong-table td{
+  width: 300px;
+  border:1px solid #C37471;
+}
+.taohong-table th{
+  width: 300px;
+  height: 40px;
+  color: #C37471;
+  background-color: #F7EBEA;
+  border-bottom:1px solid #C37471;
+}
+.taohong-table td .ivu-input{
+  border: none;
+}
+.taohong-table td .ivu-input-group-append{
+  background-color: white;
+  border: none;
+}
+.subtable-taohong {
+  width: 100%;
+  margin:auto;
+  margin-top: 5px;
+  margin-bottom: 30px !important;
+  border-collapse: collapse;
+  border:1px solid #C37471;
+}
+.subtable-taohong .firstRow{
+  color: #C37471;
+  background-color:#F7EBEA;
+}
+.subtable-taohong .firstRow th{
+  padding:5px 0px 5px 0px;
+  font-size:medium;
+  border:1px solid #C37471;
+}
+.subtable-taohong td{
+  border:1px solid #C37471;
+}
+.subtable-title-taohong{
+  display: block;
+  width:100%;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  padding-left: 10px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  font-weight: 900;
+  color: #C37471;
+  text-align: left;
+  background-color: #FAFAFC;
+}
+.subtable-toolbar-taohong{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width:100%;
+  margin: 0 auto
+}
+.subtable-taohong{
+  margin-bottom: 40px;
+  border-collapse: collapse;
+}
+.subtable-taohong td .ivu-btn{
+  border: none;
+}
+.taohong-table .ql-container.ql-snow{
+  border: none;
+}
+.taohong-table .ql-toolbar.ql-snow{
+  border: none;
+  border-bottom: 1px solid #C37471 ;
+}
+.subtable-toolbar-taohong .ivu-btn{
+  color: white;
+  background-color: #C37471;
+  border: none;
+}
+.subtable-taohong .ivu-input{
+  border: none;
+}
+.subtable-taohong .ivu-select-selection{
+  border: none
+}
+.taohong-table .ivu-btn{
+  color: white;
+  background-color: #C37471;
+  border: none;
+}
+.subtable-toolbar-taohong> *{
+  margin-right: 10px;
+}
+.subtable-taohong td .ivu-input-group-append{
+  background-color: white;
+  border: none;
+}

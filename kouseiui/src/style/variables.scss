@@ -1,0 +1,100 @@
+/**
+ * @description Global theme variable configuration
+ */
+// Color configuration
+$base-color-white: #ffffff;
+$base-color-black: #515a6e;
+$base-color-primary: #1890ff;
+$base-color-success: #13ce66;
+$base-color-warning: #ffba00;
+$base-color-danger: #ff6700;
+$base-color-error: #ff4d4f;
+$base-color-grey: rgba(0, 0, 0, 0.65);
+$base-color-background: #f6f8f9;
+
+$base-color-text-primary: #303133;
+$base-color-text-regular: #606266;
+$base-color-text-secondary: #909399;
+$base-color-text-placeholder: #c0c4cc;
+$base-border-color-base: #dcdfe6;
+$base-border-color-light: #e4e7ed;
+$base-border-color-lighter: #ebeef5;
+$base-border-color-extra-light: #f2f6fc;
+$base-background-color-base: #f5f7fa;
+
+// Default level
+$base-z-index: 1999;
+// The background color of the leftmost menu in the column
+$base-column-first-menu-background: #282c34;
+// Column menu background color
+$base-column-second-menu-background: #fff;
+// Select background color for column menu
+$base-column-second-menu-active: mix($base-color-white,
+    $base-color-primary,
+    10%);
+// Horizontal and vertical menu background colors
+$base-menu-background: #282c34;
+// Menu text color
+$base-menu-color: hsla(0, 0%, 100%, 0.95);
+// Menu selected text color
+$base-menu-color-active: hsla(0, 0%, 100%, 0.95);
+// Menu selected background color
+$base-menu-active: $base-color-primary;
+// Title color
+$base-title-color: #fff;
+// Font size configuration
+$base-font-size-small: 12px;
+$base-font-size-default: 14px;
+$base-font-size-big: 16px;
+$base-font-size-bigger: 18px;
+$base-font-size-max: 22px;
+// Maximum width
+$base-main-width: 1279px;
+// Rounded corners
+$base-border-radius: 2.5px;
+// Border color
+$base-border-color: #dcdfe6;
+// Input box height
+$base-input-height: 32px;
+// Default margin
+$base-margin: 20px;
+// Default padding
+$base-padding: 20px;
+// Default shadows
+$base-box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+// Height of horizontal top-bar, logo, and first-level menu
+$base-header-height: 60px;
+// Height of vertical, comprehensive, and column logos
+$base-logo-height: 60px;
+// The height of the top nav-bar
+$base-nav-height: 60px;
+// The height of the top tabs-bar
+$base-tabs-height: 50px;
+// The height of each item in the top tab page tabs-bar
+$base-tag-item-height: 34px;
+// The height of the menu li tag
+$base-menu-item-height: 50px;
+// app-main height
+$base-keep-alive-height: calc(100vh - #{$base-nav-height} - #{$base-tabs-height} - #{$base-padding} * 2 - 55px);
+// The width of the vertical left navigation when not collapsed
+$base-left-menu-width: 266px;
+// The width of the collapsed vertical left navigation
+$base-left-menu-width-min: 64px;
+// The width of the right side content of the vertical left navigation collapsed
+$base-right-content-width-min: calc(100% - #{$base-left-menu-width-min});
+// Default animation
+$base-transition: all 0.3s cubic-bezier(0.645, 0.045, 0.355, 1), border 0s,
+  color 0.1s, font-size 0s;
+
+:export {
+  // Menu text color variable export
+  menu-color: $base-menu-color;
+  // Export the color variable of the text selected in the menu
+  menu-color-active: $base-menu-color-active;
+  // Menu background color variable export
+  menu-background: $base-menu-background;
+  // Column menu background color variable export
+  column-second-menu-background: $base-column-second-menu-background;
+  // Export fillet
+  vab-border-radius: $base-border-radius;
+}

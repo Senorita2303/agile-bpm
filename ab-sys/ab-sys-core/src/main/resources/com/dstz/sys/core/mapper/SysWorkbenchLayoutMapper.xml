@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.sys.core.mapper.SysWorkbenchLayoutMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="SysWorkbenchLayout" type="com.dstz.sys.core.entity.SysWorkbenchLayout">
+        <id column="id_" property="id"/>
+        <result column="panel_id_" property="panelId"/>
+        <result column="cust_width_" property="custWidth"/>
+        <result column="cust_height_" property="custHeight"/>
+        <result column="sn_" property="sn"/>
+        <result column="user_id_" property="userId"/>
+        <result column="create_time_" property="createTime"/>
+    </resultMap>
+
+    <delete id="removeByUserId" parameterType="java.lang.String">
+        DELETE
+        FROM sys_workbench_layout
+        WHERE user_id_ = #{userId}
+    </delete>
+
+    <select id="getByUserId" parameterType="java.lang.String" resultMap="SysWorkbenchLayout">
+        SELECT *
+        FROM sys_workbench_layout
+        WHERE user_id_ = #{userId}
+    </select>
+
+
+</mapper>

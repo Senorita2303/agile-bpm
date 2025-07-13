@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.cms.core.mapper.CmsNewsMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="CmsNews" type="com.dstz.cms.core.entity.CmsNews"/>
+
+    <select id="listJson" parameterType="java.util.Map" resultMap="CmsNews">
+        SELECT id_, title_,
+        comments_num_,visit_num_,release_time_,release_by_,release_name_,status_,create_time_,update_time_ FROM cms_news
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+    <select id="getNewsPage" parameterType="java.util.Map" resultMap="CmsNews">
+        SELECT id_, content_, title_, images_, comments_num_, visit_num_, release_time_
+        FROM cms_news
+        where status_ = 1
+        <if test="whereSql!=null">
+         and   ${whereSql}
+        </if>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+</mapper>

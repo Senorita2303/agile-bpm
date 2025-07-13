@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.auth.core.mapper.ResourceRoleMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="ResourceRole" type="com.dstz.auth.core.entity.ResourceRole">
+        <id column="id_" property="id" />
+        <result column="app_id_" property="appId" />
+        <result column="resource_id_" property="resourceId" />
+        <result column="role_id_" property="roleId" />
+        <result column="create_time_" property="createTime" />
+        <result column="create_by_" property="createBy" />
+    </resultMap>
+
+    <select id="query" parameterType="java.util.Map" resultMap="ResourceRole">
+        SELECT id_, app_id_, resource_id_, role_id_, create_time_, create_by_ FROM sys_resource_role
+        <where>
+            <if test="whereSql!=null">
+                ${whereSql}
+            </if>
+        </where>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+    <delete id="removeByRoleAndSystem" parameterType="java.util.Map">
+		DELETE FROM sys_resource_role
+		WHERE
+		role_id_=#{roleId}
+		AND
+		app_id_=#{appId}
+	</delete>
+
+    <select id="getAllResRole" parameterType="java.lang.String" resultType="com.dstz.auth.core.entity.ResourceRole">
+		select b.*, a.code_ resAlias,c.code_ roleAlias,a.url_ url
+		from sys_resource a
+		left join sys_resource_role b on a.id_= b.resource_id_
+		left join org_role c on b.role_id_= c.id_
+		where c.enabled_=1 and a.enable_=1
+
+	</select>
+
+    <select id="getRoleIdByResourceUrl" parameterType="string" resultType="string">
+        SELECT DISTINCT b.role_id_
+        FROM sys_resource a
+                 INNER JOIN sys_resource_role b ON b.resource_id_ = a.id_
+        WHERE a.url_ = #{url,jdbcType=VARCHAR} AND a.enable_ = 1
+    </select>
+
+    <select id="selectAppIdByRoleIds" resultType="string">
+        SELECT
+            DISTINCT a.app_id_
+        FROM sys_resource a
+                 INNER JOIN sys_resource_role b ON b.resource_id_ = a.id_
+        WHERE b.role_id_ IN <foreach collection="roleIds" open="(" item="roleId" close=")" separator=",">#{roleId,jdbcType=VARCHAR}</foreach>
+    </select>
+</mapper>

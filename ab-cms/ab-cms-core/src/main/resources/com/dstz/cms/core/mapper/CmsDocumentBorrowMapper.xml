@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dstz.cms.core.mapper.CmsDocumentBorrowMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="CmsDocumentBorrowVO" type="com.dstz.cms.core.entity.vo.CmsDocumentBorrowVO">
+        <id column="id_" property="id"/>
+        <result column="user_id_" property="userId"/>
+        <result column="user_name_" property="userName"/>
+        <result column="document_id_" property="documentId"/>
+        <result column="documentName" property="documentName"/>
+        <result column="documentAuthor" property="documentAuthor"/>
+        <result column="status_" property="status"/>
+        <result column="favorite_flag_" property="favoriteFlag"/>
+        <result column="remark_" property="remark"/>
+        <result column="revert_time_" property="revertTime"/>
+        <result column="borrow_time_" property="borrowTime"/>
+        <result column="create_time_" property="createTime"/>
+        <result column="create_by_" property="createBy"/>
+        <result column="create_org_id_" property="createOrgId"/>
+        <result column="update_time_" property="updateTime"/>
+        <result column="updater_" property="updater"/>
+        <result column="update_by_" property="updateBy"/>
+    </resultMap>
+
+
+    <select id="listJson" parameterType="java.util.Map" resultMap="CmsDocumentBorrowVO">
+        SELECT
+        b.* , c.name_ as documentName , c.creator_ documentAuthor
+        FROM
+        cms_document_borrow b
+        left join
+        cms_document c
+        on c.id_ = b.document_id_
+        where
+        b.historical_flag_ = 0
+        and b.status_ in ( 'borrow' , 'pass')
+        <if test="whereSql!=null and whereSql!=''">
+            and ${whereSql}
+        </if>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+    <select id="historicalListJson" parameterType="java.util.Map" resultMap="CmsDocumentBorrowVO">
+        SELECT
+        b.* , c.name_ as documentName , c.creator_ documentAuthor
+        FROM
+        cms_document_borrow b ,
+        cms_document c
+        where
+        c.id_ = b.document_id_
+        and
+        b.status_ in ('borrow', 'pass' , 'reject', 'revert')
+        <if test=" admin==null or admin=='' ">
+            and b.user_id_ = #{userId}
+        </if>
+        <if test="whereSql!=null and whereSql!=''">
+            and ${whereSql}
+        </if>
+        <if test="orderBySql!=null">
+            ORDER BY ${orderBySql}
+        </if>
+        <if test="orderBySql==null">
+            ORDER BY id_ DESC
+        </if>
+    </select>
+
+</mapper>
